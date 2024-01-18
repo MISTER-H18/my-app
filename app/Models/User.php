@@ -18,16 +18,31 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+    // protected $table = 'users';
+
+    // protected $primaryKey = 'id';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
+        'identity_card',
         'name',
+        // 'middle_name',
+        'last_name',
+        // 'second_last_name',
+        'birth_date',
         'email',
+        'sex',
+        'address',
         'password',
     ];
+
+    public function phone_number(){
+        return $this->belongsTo(\App\Models\PhoneNumber::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
