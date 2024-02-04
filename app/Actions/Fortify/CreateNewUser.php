@@ -20,35 +20,38 @@ class CreateNewUser implements CreatesNewUsers
      */
     public function create(array $input): User
     {
+        $mim_valid_date =  Carbon::today()->subYear(1)->format('Y-m-d');
+
         Validator::make($input, [
-            'identity_card' => ['required','string', 'max:10', 'unique:users'],
-            'name' => ['required', 'string', 'alpha', 'max:45', 'min:3'],
-            // 'middle_name' => ['required', 'string', 'alpha', 'max:45', 'min:3'],
-            'last_name' => ['required', 'string', 'alpha', 'max:45', 'min:3'],
-            // 'second_last_name' => ['required', 'string', 'alpha', 'max:45', 'min:3'],
-
-            'start_date_field' => Carbon::now()->subYear(120)->format('Y m d'),
-            'end_date_field' =>  Carbon::now()->subYear(5)->format('Y m d'),
-            //'after:start_date_field', 'before:end_date_field'
-            'birth_date' => ['required','date'],
-
-            'email' => ['required', 'string', 'email', 'max:255', 'min:10', 'unique:users'],
-            'sex' => ['required'],
+            'identity_card' => ['required','numeric', 'unique:users,identity_card'],
+            'first_name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
+            // 'middle_name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
+            'last_name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
+            // 'second_last_name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
+            'date_of_birth' => ['required', 'date', 'before:' . $mim_valid_date],
+            'phone_number' => ['required','numeric', 'digits:11', 'regex:/^([0-9\s\-\+\(\)]*)$/',],
+            'email' => ['required', 'string', 'email', 'max:255', 'min:10', 'unique:users,email'],
+            'sex' => ['required','boolean'],
             'address' => ['required', 'string', 'max:255', 'min:10'],
+            'marital_status' => ['required','integer'],
+            'occupation' => ['required','integer'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
         return User::create([
             'identity_card' => $input['identity_card'],
-            'name' => $input['name'],
+            'first_name' => $input['first_name'],
             // 'middle_name' => $input['middle_name'],
             'last_name' => $input['last_name'],
             // 'second_last_name' => $input['second_last_name'],
-            'birth_date' => $input['birth_date'],
+            'date_of_birth' => $input['date_of_birth'],
+            'phone_number' => $input['phone_number'],
             'email' => $input['email'],
             'sex' => $input['sex'],
             'address' => $input['address'],
+            'marital_status_id' => $input['marital_status'],
+            'occupation_id' => $input['occupation'],
             'password' => Hash::make($input['password']),
         ]);
     }

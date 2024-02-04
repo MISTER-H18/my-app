@@ -21,4 +21,13 @@ class MaritalStatus extends Model
     protected $fillable = [
         'status',
     ];
+
+    /** Get all of the users for marital status
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function user(): HasMany
+    {
+        return $this->hasMany(\App\Models\User::class, 'marital_status_id', 'id');
+    }
 }

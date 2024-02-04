@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('phone_numbers', function (Blueprint $table) {
-            $table->id();
-            $table->string('phone', 20)->nullable();
-            $table->timestamps();
-        });
+        // Schema::create('phone_numbers', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('phone', 20)->nullable();
+        //     $table->timestamps();
+        // });
     }
 
     /**

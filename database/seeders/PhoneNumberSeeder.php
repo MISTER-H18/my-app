@@ -12,6 +12,6 @@ class PhoneNumberSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\PhoneNumber::factory()->count(20)->create()->unique();
+        \App\Models\PhoneNumber::factory()->count(30)->create();
     }
 }

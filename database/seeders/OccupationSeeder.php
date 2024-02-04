@@ -12,6 +12,6 @@ class OccupationSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Occupation::factory()->count(30)->create()->unique();
+        \App\Models\Occupation::factory()->count(30)->create();
     }
 }

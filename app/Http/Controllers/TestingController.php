@@ -8,8 +8,9 @@ use Carbon\Carbon;
 class TestingController extends Controller
 {
     public function test(){
-        $date = Carbon::now()->subYear(120)->format('Y m d');
-        $date2 = Carbon::now()->subYear(5)->format('Y m d');
-        return $date;
+
+        $mim_valid_date =  Carbon::now()->subYear(5)->format('Y-m-d'); 
+        $date_of_birth = 'before:';
+        return $date_of_birth . $mim_valid_date;
     }
 }

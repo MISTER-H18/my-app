@@ -21,4 +21,13 @@ class Occupation extends Model
     protected $fillable = [
         'job_title',
     ];
+
+    /** Get all of the users for the occupations
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function user(): HasMany
+    {
+        return $this->hasMany(\App\Models\User::class, 'occupation_id', 'id');
+    }
 }

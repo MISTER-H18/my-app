@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth/login');
+    return view('auth.login');
 });
 
 Route::get('/testing', [App\Http\Controllers\TestingController::class, ('test')]);

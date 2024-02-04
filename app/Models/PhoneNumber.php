@@ -22,7 +22,7 @@ class PhoneNumber extends Model
         'phone',
     ];
 
-    public function users(){
-        return $this->hasMany(\App\Models\User::class);
+    public function user(){
+        return $this->hasMany(\App\Models\User::class,'phone_number_id', 'id');
     }
 }
