@@ -83,7 +83,7 @@
             {{-- agregar tooltips para las contraseñas, añadir logotipo y paleta de colores, modulo de censo listo para el 15 de febrero --}}
             <div class="mt-4">
                 <x-label for="occupation" value="{{ __('Occupation') }}" />
-                {{-- @if (count($occupations) < 8 ) --}}
+                @if (count($occupations) < 8 )
 
                     <select class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="occupation" autofocus >
 
@@ -93,15 +93,18 @@
 
                     </select>
 
-               {{-- @else --}}
+                @else
 
-                    {{-- Todo: 
-                        how to fetch the selected input
-                        Styling of Select2 dropdown select boxes - https://stackoverflow.com/questions/24347340/styling-of-select2-dropdown-select-boxes
-                        --}}
-                    {{-- @livewire('dropdown-search-bar', ['optionName' => 'occupation', 'options' => $occupations, 'valueNameField' => 'id', 'slotNameField' => 'job_title']) --}}
-
-                {{-- @endif --}}
+                    @livewire('dropdown-search-bar', 
+                        [
+                            'optionName' => 'occupation',
+                            'options' => $occupations,
+                            'valueNameField' => 'id',
+                            'slotNameField' => 'job_title'
+                        ]
+                    )
+                    
+                @endif
             </div>
 
             <div class="mt-4">

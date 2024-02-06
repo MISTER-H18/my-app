@@ -6,19 +6,21 @@ use Livewire\Component;
 
 class DropdownSearchBar extends Component
 {
-    public $selectedItem= '';
-    public $optionName = '';
-    public $options = []; 
+    public $optionName = ''; //input name -> occupation
+    public $selectedItem; 
+    public $options = []; // Array with the database values
 
-    public $valueNameField = '';
-    public $slotNameField = '';
+    // represents database fields
+    public $valueNameField = ''; //id
+    public $slotNameField = ''; //job_title
 
     public function mount()
     {
         $this->options;
 
-        $this->valueNameField;
-        $this->slotNameField;
+        $this->valueNameField; //id
+        $this->slotNameField; //job_title
+
     }
 
     public function render()
