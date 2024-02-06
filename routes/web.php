@@ -11,13 +11,22 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('auth.login');
 });
 
 Route::get('/testing', [App\Http\Controllers\TestingController::class, ('test')]);
+
+// Route::get('/user/profile', function () {
+
+//     $marital_statuses = \App\Models\MaritalStatus::all();
+//     $occupations = \App\Models\Occupation::all();
+
+//     return view('profile.update-profile-information-form', ['marital_statuses' => $marital_statuses, 'occupations' => $occupations]);
+
+// });
 
 Route::middleware([
     'auth:sanctum',

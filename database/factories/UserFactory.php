@@ -33,7 +33,7 @@ class UserFactory extends Factory
             // 'current_team_id' => null,
             
             'identity_card' => $this->faker->unique()->numberBetween(10000000, 30000000),
-            'first_name' => $this->faker->firstName(),
+            'name' => $this->faker->firstName(),
             // 'middle_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             // 'second_last_name' => $this->faker->lastName(),
@@ -80,7 +80,7 @@ class UserFactory extends Factory
         return $this->has(
             Team::factory()
                 ->state(fn (array $attributes, User $user) => [
-                    'first_name' => $user->name.'\'s Team',
+                    'name' => $user->name.'\'s Team',
                     'user_id' => $user->id,
                     'personal_team' => true,
                 ])

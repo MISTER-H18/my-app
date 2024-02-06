@@ -53,7 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'identity_card',
-        'first_name',
+        'name',
         // 'middle_name',
         'last_name',
         // 'second_last_name',

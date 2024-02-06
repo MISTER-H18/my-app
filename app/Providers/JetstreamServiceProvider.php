@@ -37,9 +37,18 @@ class JetstreamServiceProvider extends ServiceProvider
             
         });
 
+        // Fortify::registerView(function () {
+
+        //     $marital_statuses = \App\Models\MaritalStatus::all();
+        //     $occupations = \App\Models\Occupation::all();
+
+        //     return view('profile.update-profile-information-form', ['marital_statuses' => $marital_statuses, 'occupations' => $occupations,]);
+            
+        // });
+
         Fortify::authenticateUsing(function (Request $request) {
-            $user = \App\Models\User::where('email', $request->login)
-            ->orWhere('identity_card', $request->login)
+            $user = \App\Models\User::where('email', $request->identity_card)
+            ->orWhere('identity_card', $request->identity_card)
             ->first();
             
             if($user &&

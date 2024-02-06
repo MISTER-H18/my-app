@@ -24,7 +24,7 @@ class CreateNewUser implements CreatesNewUsers
 
         Validator::make($input, [
             'identity_card' => ['required','numeric', 'unique:users,identity_card'],
-            'first_name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
+            'name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
             // 'middle_name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
             'last_name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
             // 'second_last_name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
@@ -44,7 +44,7 @@ class CreateNewUser implements CreatesNewUsers
 
         return User::create([
             'identity_card' => $input['identity_card'],
-            'first_name' => $input['first_name'],
+            'name' => $input['name'],
             // 'middle_name' => $input['middle_name'],
             'last_name' => $input['last_name'],
             // 'second_last_name' => $input['second_last_name'],

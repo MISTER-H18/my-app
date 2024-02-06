@@ -18,8 +18,19 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update(User $user, array $input): void
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'identity_card' => ['required', 'numeric', Rule::unique('users')->ignore($user->id)],
+            'name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
+            // 'middle_name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
+            'last_name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
+            // 'second_last_name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
+            // 'date_of_birth' => ['required', 'date', 'before:' . $mim_valid_date],
+            'date_of_birth' => ['required', 'date'],
+            'phone_number' => ['required', 'numeric', 'digits:11', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
+            'email' => ['required', 'email', 'max:255', 'min:10', Rule::unique('users')->ignore($user->id)],
+            'sex' => ['required', 'boolean'],
+            'address' => ['required', 'string', 'max:255', 'min:10'],
+            // 'marital_status' => ['required'],
+            // 'occupation' => ['required'],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
 
@@ -32,8 +43,18 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $this->updateVerifiedUser($user, $input);
         } else {
             $user->forceFill([
+                'identity_card' => $input['identity_card'],
                 'name' => $input['name'],
+                // 'middle_name' => $input['middle_name'],
+                'last_name' => $input['last_name'],
+                // 'second_last_name' => $input['second_last_name'],
+                'date_of_birth' => $input['date_of_birth'],
+                'phone_number' => $input['phone_number'],
                 'email' => $input['email'],
+                'sex' => $input['sex'],
+                'address' => $input['address'],
+                // 'marital_status_id' => $input['marital_status'],
+                // 'occupation_id' => $input['occupation'],
             ])->save();
         }
     }
