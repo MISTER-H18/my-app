@@ -8,8 +8,7 @@
 
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
         <form method="POST" action="{{ route('register') }}">
@@ -19,7 +18,7 @@
                 <x-label for="identity_card" value="{{ __('Identity card') }}" />
                 <x-input id="identity_card" class="block mt-1 w-full" type="text" name="identity_card"
                     :value="old('identity_card')" autofocus autocomplete="identity_card" />
-                    <x-text-hint for="identity_card" value="{{ __('The ID must have this format') }}: 12.345.678." />
+                    <x-text-hint for="identity_card" value="{{ __('The ID must have this format') }}: 12345678." />
             </div>
 
             <div class="mt-4">

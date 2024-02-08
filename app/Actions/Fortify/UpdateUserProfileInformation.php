@@ -20,9 +20,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         Validator::make($input, [
             'identity_card' => ['required', 'numeric', Rule::unique('users')->ignore($user->id)],
             'name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
-            // 'middle_name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
+            // 'middle_name' => ['required', 'string', 'lowercase', 'max:40', 'min:3'],
             'last_name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
-            // 'second_last_name' => ['required', 'string', 'alpha', 'lowercase', 'max:40', 'min:3'],
+            // 'second_last_name' => ['required', 'string', 'lowercase', 'max:40', 'min:3'],
             // 'date_of_birth' => ['required', 'date', 'before:' . $mim_valid_date],
             'date_of_birth' => ['required', 'date'],
             'phone_number' => ['required', 'numeric', 'digits:11', 'regex:/^([0-9\s\-\+\(\)]*)$/'],

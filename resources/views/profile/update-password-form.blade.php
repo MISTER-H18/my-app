@@ -17,6 +17,7 @@
         <div class="col-span-6 sm:col-span-4">
             <x-label for="password" value="{{ __('New Password') }}" />
             <x-input id="password" type="password" class="mt-1 block w-full" wire:model="state.password" autocomplete="new-password" />
+            <x-text-hint for="password" value="{{ __('Use at least 8 characters, one uppercase, one lowercase and one number') }}." />
             <x-input-error for="password" class="mt-2" />
         </div>
 
