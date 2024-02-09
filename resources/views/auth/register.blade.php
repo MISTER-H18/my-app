@@ -6,11 +6,6 @@
 
         <x-validation-errors class="mb-4" />
 
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
@@ -102,7 +97,7 @@
                 @if (count($occupations) < 8)
 
                     <select
-                        class="block mt-1 w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
+                        class="block mt-1 w-full border-sky-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
                         name="occupation" autofocus>
 
                         @foreach ($occupations as $occupation)
@@ -113,12 +108,12 @@
                     </select>
                 @else
                     @livewire('dropdown-search-bar', [
+                        // 'livewireAction' => 'ignore',
                         'optionName' => 'occupation',
                         'options' => $occupations,
                         'valueNameField' => 'id',
                         'slotNameField' => 'job_title',
                     ])
-
                 @endif
             </div>
 

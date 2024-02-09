@@ -37,7 +37,7 @@
         }
 
         .select2-container--default .select2-selection--single .select2-selection__rendered {
-            line-height: 1.5rem;
+            line-height: 1.5rem !important;
         }
 
         /* styles for the selection arrow */
@@ -84,14 +84,15 @@
         /* .select2-results__option .select2-results__message{
         } */
 
-        /* .select2-search__field[type="search"]:focus,{
-            box-shadow: red !important;
-        } */
+        /* changes the outline color of the input on focus */
+        [type="search"]:focus {
+            --tw-ring-color: #ea580c !important
+        }
+
     </style>
 
     <div wire:ignore>
-
-        <select name="{{ $optionName }}" id="select2">
+        <select name="{{ $optionName }}" id="select2"> {{--wire:{{ $livewireAction }}--}}
 
             @foreach ($options as $option)
                 <x-option name="{{ $optionName }}"
@@ -103,7 +104,7 @@
 
     <script>
         $(document).ready(function() {
-        
+
             $('#select2').select2();
 
             $('#select2').on('change', function(e) {
@@ -114,7 +115,9 @@
             $('b[role="presentation"]').hide();
 
             $('.select2-container--default .select2-selection--single .select2-selection__arrow')
-            .append('<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/></svg>');
+                .append(
+                    '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/></svg>'
+                    );
 
             // alert($('.select2-results__option .select2-results__message').innerHTML('No se encontraron resultados'));
 

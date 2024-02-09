@@ -29,8 +29,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'email' => ['required', 'email', 'max:255', 'min:10', Rule::unique('users')->ignore($user->id)],
             'sex' => ['required', 'boolean'],
             'address' => ['required', 'string', 'max:255', 'min:10'],
-            // 'marital_status' => ['required'],
-            // 'occupation' => ['required'],
+            'marital_status_id' => ['required'],
+            'occupation_id' => ['required'],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
 
@@ -53,8 +53,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'email' => $input['email'],
                 'sex' => $input['sex'],
                 'address' => $input['address'],
-                // 'marital_status_id' => $input['marital_status'],
-                // 'occupation_id' => $input['occupation'],
+                'marital_status_id' => $input['marital_status_id'],
+                'occupation_id' => $input['occupation_id'],
             ])->save();
         }
     }

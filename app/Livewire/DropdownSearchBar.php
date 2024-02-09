@@ -6,6 +6,7 @@ use Livewire\Component;
 
 class DropdownSearchBar extends Component
 {
+    // public $livewireAction = '';
     public $optionName = ''; //input name -> occupation
     public $selectedItem; 
     public $options = []; // Array with the database values

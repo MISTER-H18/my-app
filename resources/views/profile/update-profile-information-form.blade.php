@@ -56,6 +56,7 @@
             <x-label for="identity_card" value="{{ __('Identity card') }}" />
             <x-input id="identity_card" type="text" class="mt-1 block w-full" wire:model="state.identity_card"
                 autocomplete="identity_card" />
+                <x-text-hint for="identity_card" value="{{ __('The ID must have this format') }}: 12345678." />
             <x-input-error for="identity_card" class="mt-2" />
         </div>
 
@@ -64,6 +65,7 @@
             <x-label for="name" value="{{ __('Name') }}" />
             <x-input id="name" type="text" class="mt-1 block w-full" wire:model="state.name"
                 autocomplete="name" />
+                <x-text-hint for="name" value="{{ __('The name must be lowercase') }}." />
             <x-input-error for="name" class="mt-2" />
         </div>
 
@@ -72,6 +74,7 @@
             <x-label for="last_name" value="{{ __('Last name') }}" />
             <x-input id="last_name" type="text" class="mt-1 block w-full" wire:model="state.last_name"
                 autocomplete="last_name" />
+                <x-text-hint for="last_name" value="{{ __('The lastname must be lowercase') }}." />
             <x-input-error for="last_name" class="mt-2" />
         </div>
 
@@ -117,7 +120,7 @@
         <div class="col-span-6 sm:col-span-4">
             <x-label for="marital_status" value="{{ __('Marital status') }}" />
 
-            {{-- <select wire:model="state.marital_status_id"
+            <select wire:model="state.marital_status_id"
                 class="block mt-1 w-full border-sky-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
                 id="marital_status" name="marital_status" autofocus>
 
@@ -126,17 +129,17 @@
                         value="{{ $marital_status->id }}">{{ $marital_status->status }}</x-option>
                 @endforeach
 
-            </select> --}}
+            </select>
 
             <x-input-error for="marital_status" class="mt-2" />
         </div>
 
         <div class="col-span-6 sm:col-span-4">
             <x-label for="occupation" value="{{ __('Occupation') }}" />
-            {{-- @if (count($occupations) < 8)
+            @if (count($occupations) < 8)
 
                 <select wire:model="state.occupation_id"
-                    class="block mt-1 w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
+                    class="block mt-1 w-full border-sky-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
                     id="occupation" name="occupation" autofocus>
 
                     @foreach ($occupations as $occupation)
@@ -145,16 +148,19 @@
                     @endforeach
 
                 </select>
+
             @else
+
                 @livewire('dropdown-search-bar', [
+                    // 'livewireAction' => 'model="state.occupation_id"',
                     'optionName' => 'occupation',
                     'options' => $occupations,
                     'valueNameField' => 'id',
                     'slotNameField' => 'job_title',
                 ])
-            @endif
 
-            <x-input-error for="occupation" class="mt-2" /> --}}
+            @endif
+            <x-input-error for="occupation" class="mt-2" />
         </div>
 
         <!-- Email -->

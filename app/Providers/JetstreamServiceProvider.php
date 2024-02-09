@@ -28,14 +28,15 @@ class JetstreamServiceProvider extends ServiceProvider
 
         Jetstream::deleteUsersUsing(DeleteUser::class);
 
-        Fortify::registerView(function () {
+        // With the registerView function is posible to change the default register view and it behavior
+        // Fortify::registerView(function () {
 
-            $marital_statuses = \App\Models\MaritalStatus::select('id', 'status')->orderBy('id', 'asc')->get();
-            $occupations = \App\Models\Occupation::select('id', 'job_title')->orderBy('id', 'asc')->get();
+        //     $marital_statuses = \App\Models\MaritalStatus::select('id', 'status')->orderBy('id', 'asc')->get();
+        //     $occupations = \App\Models\Occupation::select('id', 'job_title')->orderBy('id', 'asc')->get();
 
-            return view('auth.register', ['marital_statuses' => $marital_statuses, 'occupations' => $occupations,]);
+        //     return view('auth.register', ['marital_statuses' => $marital_statuses, 'occupations' => $occupations,]);
             
-        });
+        // });
 
         Fortify::authenticateUsing(function (Request $request) {
             $user = \App\Models\User::where('email', $request->identity_card)

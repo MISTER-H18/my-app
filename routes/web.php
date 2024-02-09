@@ -17,15 +17,16 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/testing', [App\Http\Controllers\TestingController::class, ('test')]);
+// $authMiddleware = config('jetstream.guard')
+//         ? 'auth:'.config('jetstream.guard')
+//         : 'auth';
 
-// Route::get('/user/profile', function () {
+// $authSessionMiddleware = config('jetstream.auth_session', false)
+//     ? config('jetstream.auth_session')
+//     : null;
 
-//     $marital_statuses = \App\Models\MaritalStatus::all();
-//     $occupations = \App\Models\Occupation::all();
-
-//     return view('profile.update-profile-information-form', ['marital_statuses' => $marital_statuses, 'occupations' => $occupations]);
-
+// Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authSessionMiddleware]))], function () {
+//     Route::get('/user/profile', [App\Http\Controllers\CustomUserProfileController::class, 'show'])->name('profile.show');
 // });
 
 Route::middleware([
@@ -33,7 +34,11 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
 });
+
+Route::get('/testing', [App\Http\Controllers\TestingController::class, ('test')]);
