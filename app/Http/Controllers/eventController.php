@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class eventController extends Controller
 {
@@ -20,5 +21,12 @@ class eventController extends Controller
         }
             
         return view('curso\event', compact('events'));
+    }
+    public function EventCrud(){
+        $event=DB::select("SELECT * FROM events");
+        return view('event\eventCrud') ->with('event',$event);
+    }
+    public function create() {
+        return view ('event\createEvent');
     }
 }

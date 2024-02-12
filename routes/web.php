@@ -43,7 +43,20 @@ Route::middleware([
 
 
 Route::controller(eventController::class)->group(function(){ 
-    Route::get('curso/event', 'event')->name('curso.event');
+    Route::get('event', 'event')->name('event.event');
+    Route::get('event/eventCrud', 'EventCrud') ->name('event.EventCrud');
+    //Formulario de crear evento
+    Route::get('event/create', 'create')->name('event.create');
+    //Peticion POST para guardar el formulario de crear curso
+    Route::post('event/store', 'Store')->name('event.store');
+    //Mostrar informacion del curso por ID
+    Route::get('event/{id}','show')->name('event.show');
+    //Editar un curso por su id
+    Route::get('event/{id}/edit', 'edit' )-> name('event.edit');
+    //Actualizar los datos de un curso
+    Route::put('event/update/{id}', 'Update' )-> name('event.update');
+    //Eliminar cursos
+    Route::delete('event/destroy/{id}' , 'Destroy' )-> name('event.destroy');
     });
 
 //Rutas para modulo de cursos
