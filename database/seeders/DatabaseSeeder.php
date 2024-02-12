@@ -13,24 +13,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        
         // \App\Models\User::factory()->create([
             //     'name' => 'Test User',
             //     'email' => 'test@example.com',
             // ]);
             
-        $this->truncateTables([
-            'marital_statuses',
-            'occupations',
-            //'phone_numbers',
-        ]);
-
-        $this->call([
-            MaritalStatusSeeder::class,
-            OccupationSeeder::class,
-            //PhoneNumberSeeder::class,
-        ]);
-        
+            $this->truncateTables([
+                'marital_statuses',
+                'occupations',
+                //'phone_numbers',
+            ]);
+            
+            $this->call([
+                MaritalStatusSeeder::class,
+                OccupationSeeder::class,
+                //PhoneNumberSeeder::class,
+            ]);
+            $this->call([ EventSeeder::class]);
+            
         \App\Models\User::factory(50)->create();
         
 

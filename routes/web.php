@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\CursoController;
+use App\Http\Controllers\eventController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,10 +19,6 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/cursos', function () {
-    return 'welcome';
-    
-});
 
 Route::get('/testing', [App\Http\Controllers\TestingController::class, ('test')]);
 
@@ -44,12 +42,15 @@ Route::middleware([
 });
 
 
-
-
+Route::controller(eventController::class)->group(function(){ 
+    Route::get('curso/event', 'event')->name('curso.event');
+    });
 
 //Rutas para modulo de cursos
 Route::controller(CursoController::class)->group(function () {
     Route::get('curso','index')->name('curso.index');
+
+    Route::get('curso/crud', 'cursoCrud')->name('curso.cursoCrud');
 
     Route::get('curso/create','create')->name('curso.create');
 
@@ -67,3 +68,4 @@ Route::controller(CursoController::class)->group(function () {
 //Eliminar un curso de la base de datos
     Route::delete('curso/{curso}','destroy') -> name('curso.destroy');
 });
+Route::resource('curso', CursoController::class);
