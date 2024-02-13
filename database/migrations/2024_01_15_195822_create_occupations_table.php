@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('occupations', function (Blueprint $table) {
-            $table->id();
-            $table->text('job_title')->unique('job_title');
-            $table->timestamps();
-        });
+        // Schema::create('occupations', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->text('job_title')->unique('job_title');
+        //     $table->timestamps();
+        // });
     }
 
     /**

@@ -21,13 +21,13 @@ class DatabaseSeeder extends Seeder
             
         $this->truncateTables([
             'marital_statuses',
-            'occupations',
+            // 'occupations',
             //'phone_numbers',
         ]);
 
         $this->call([
             MaritalStatusSeeder::class,
-            OccupationSeeder::class,
+            // OccupationSeeder::class,
             //PhoneNumberSeeder::class,
         ]);
         

@@ -30,7 +30,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'sex' => ['required', 'boolean'],
             'address' => ['required', 'string', 'max:255', 'min:10'],
             'marital_status_id' => ['required'],
-            'occupation_id' => ['required'],
+            'occupation' => ['required', 'string', 'max:255'],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');
 
@@ -54,7 +54,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'sex' => $input['sex'],
                 'address' => $input['address'],
                 'marital_status_id' => $input['marital_status_id'],
-                'occupation_id' => $input['occupation_id'],
+                'occupation' => $input['occupation'],
             ])->save();
         }
     }

@@ -28,11 +28,11 @@ class AppServiceProvider extends ServiceProvider
         Facades\View::composer(['profile.update-profile-information-form', 'auth.register'], function (View $view) {
             
             $marital_statuses = MaritalStatus::select('id', 'status')->orderBy('id', 'ASC')->get();
-            $occupations = Occupation::select('id', 'job_title')->orderBy('id', 'ASC')->get();
+            // $occupations = Occupation::select('id', 'job_title')->orderBy('id', 'ASC')->get();
 
             $view->with([
                 'marital_statuses' => $marital_statuses,
-                'occupations' => $occupations,
+                // 'occupations' => $occupations,
             ]);
             
         });

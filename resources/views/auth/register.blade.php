@@ -94,7 +94,9 @@
             
             <div class="mt-4">
                 <x-label for="occupation" value="{{ __('Occupation') }}" />
-                @if (count($occupations) < 8)
+                <x-input id="occupation" class="block mt-1 w-full" type="text" name="occupation" :value="old('occupation')"
+                    autofocus autocomplete="occupation" />
+                {{-- @if (count($occupations) < 8)
 
                     <select
                         class="block mt-1 w-full border-sky-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
@@ -114,7 +116,7 @@
                         'valueNameField' => 'id',
                         'slotNameField' => 'job_title',
                     ])
-                @endif
+                @endif --}}
             </div>
 
             <div class="mt-4">

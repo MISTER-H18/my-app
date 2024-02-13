@@ -1,5 +1,4 @@
 <div>
-
     <style>
         /* main width for the select2 input */
         .select2-container {
@@ -88,18 +87,17 @@
         [type="search"]:focus {
             --tw-ring-color: #ea580c !important
         }
-
     </style>
 
-    <div wire:ignore>
-        <select name="{{ $optionName }}" id="select2"> {{--wire:{{ $livewireAction }}--}}
+    <div wire:ignore> 
+        <select name="{{ $optionName }}" id="select2">
 
             @foreach ($options as $option)
-                <x-option name="{{ $optionName }}"
-                    value="{{ $option->$valueNameField }}">{{ $option->$slotNameField }}</x-option>
+                <x-option name="{{ $optionName }}" value="{{ $option->$valueNameField }}">{{ $option->$slotNameField }}</x-option>
             @endforeach
 
         </select>
+
     </div>
 
     <script>
@@ -115,10 +113,10 @@
             $('b[role="presentation"]').hide();
 
             $('.select2-container--default .select2-selection--single .select2-selection__arrow')
-                .append(
-                    '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/></svg>'
-                    );
-
+            .append(
+                '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/></svg>'
+            );
+            
             // alert($('.select2-results__option .select2-results__message').innerHTML('No se encontraron resultados'));
 
         });

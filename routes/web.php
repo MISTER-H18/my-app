@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,23 +14,13 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
- */
+*/
+    
+if(!config('jetstream.auth_session', false)){
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+    Route::view('/', ('auth.login')->name('login'));
 
-// $authMiddleware = config('jetstream.guard')
-//         ? 'auth:'.config('jetstream.guard')
-//         : 'auth';
-
-// $authSessionMiddleware = config('jetstream.auth_session', false)
-//     ? config('jetstream.auth_session')
-//     : null;
-
-// Route::group(['middleware' => array_values(array_filter([$authMiddleware, $authSessionMiddleware]))], function () {
-//     Route::get('/user/profile', [App\Http\Controllers\CustomUserProfileController::class, 'show'])->name('profile.show');
-// });
+}else Route::redirect('/', 'dashboard');
 
 Route::middleware([
     'auth:sanctum',
@@ -35,9 +28,15 @@ Route::middleware([
     'verified',
 ])->group(function () {
     
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
+
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/members', 'index')->name('members');
+        Route::post('/members', 'store');
+        Route::get('/members/{id}', 'show');
+        Route::put('/members/{id}/update', 'update');
+        Route::delete('/members/{id}', 'destroy');
+    });
 
 });
 

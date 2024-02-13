@@ -61,11 +61,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'sex',
         'phone_number',
         'address',
+        'occupation',
         'email',
         'password',
 
         'marital_status_id',
-        'occupation_id'
     ];
 
     /**
@@ -123,10 +123,10 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function occupation(): BelongsTo
-    {
-        return $this->belongsTo(\App\Models\Occupation::class, 'occupation_id', 'id');
-    }
+    // public function occupation(): BelongsTo
+    // {
+    //     return $this->belongsTo(\App\Models\Occupation::class, 'occupation_id', 'id');
+    // }
 
     /**
      * The attributes that should be hidden for serialization.

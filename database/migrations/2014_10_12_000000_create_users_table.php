@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean('sex')->nullable();
             $table->string('phone_number', 20)->nullable();
             $table->text('address')->nullable();
+            $table->text('occupation')->nullable();
             $table->string('email', 60)->unique()->unique('email');
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
@@ -29,10 +30,10 @@ return new class extends Migration
             $table->rememberToken();
             
             $table->unsignedBigInteger('marital_status_id')->index('marital_status_id');
-            $table->unsignedBigInteger('occupation_id')->index('occupation_id');
+            // $table->unsignedBigInteger('occupation_id')->index('occupation_id');
             //$table->unsignedBigInteger('phone_number_id')->index('phone_number_id');
 
-            // $table->foreignId('current_team_id')->nullable();
+            $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
         });
     }

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreign(['marital_status_id'], 'users_ibfk_1')->references(['id'])->on('marital_statuses')->onDelete('CASCADE')->onUpdate('RESTRICT');
-            $table->foreign(['occupation_id'], 'users_ibfk_2')->references(['id'])->on('occupations')->onDelete('CASCADE')->onUpdate('RESTRICT');
+            // $table->foreign(['occupation_id'], 'users_ibfk_2')->references(['id'])->on('occupations')->onDelete('CASCADE')->onUpdate('RESTRICT');
             // $table->foreign(['phone_number_id'], 'users_ibfk_3')->references(['id'])->on('phone_numbers')->onDelete('CASCADE')->onUpdate('RESTRICT');
         });
     }

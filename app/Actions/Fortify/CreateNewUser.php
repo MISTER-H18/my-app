@@ -37,7 +37,7 @@ class CreateNewUser implements CreatesNewUsers
             'sex' => ['required','boolean'],
             'address' => ['required', 'string', 'max:255', 'min:10'],
             'marital_status' => ['required', 'integer'],
-            'occupation' => ['required'],
+            'occupation' => ['required', 'string', 'max:255'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
@@ -54,7 +54,7 @@ class CreateNewUser implements CreatesNewUsers
             'sex' => $input['sex'],
             'address' => $input['address'],
             'marital_status_id' => $input['marital_status'],
-            'occupation_id' => $input['occupation'],
+            'occupation' => $input['occupation'],
             'password' => Hash::make($input['password']),
         ]);
     }

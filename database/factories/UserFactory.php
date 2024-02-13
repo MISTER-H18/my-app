@@ -41,6 +41,7 @@ class UserFactory extends Factory
             'sex' => $this->faker->randomElement([0,1]),
             'phone_number' => $this->faker->phoneNumber(),
             'address' => $this->faker->address(),
+            'occupation' => $this->faker->unique()->jobTitle(),
             'email' => $this->faker->unique()->safeEmail(),
             // 'password' => $this->faker->unique()->password(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', //It means password
@@ -52,7 +53,7 @@ class UserFactory extends Factory
             'profile_photo_path' => null,
 
             'marital_status_id' => \App\Models\MaritalStatus::inRandomOrder()->first()->id,
-            'occupation_id' => \App\Models\Occupation::inRandomOrder()->first()->id,
+            // 'occupation_id' => \App\Models\Occupation::inRandomOrder()->first()->id,
         ];
     }
 

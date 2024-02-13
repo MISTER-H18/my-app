@@ -56,7 +56,7 @@
             <x-label for="identity_card" value="{{ __('Identity card') }}" />
             <x-input id="identity_card" type="text" class="mt-1 block w-full" wire:model="state.identity_card"
                 autocomplete="identity_card" />
-                <x-text-hint for="identity_card" value="{{ __('The ID must have this format') }}: 12345678." />
+            <x-text-hint for="identity_card" value="{{ __('The ID must have this format') }}: 12345678." />
             <x-input-error for="identity_card" class="mt-2" />
         </div>
 
@@ -65,7 +65,7 @@
             <x-label for="name" value="{{ __('Name') }}" />
             <x-input id="name" type="text" class="mt-1 block w-full" wire:model="state.name"
                 autocomplete="name" />
-                <x-text-hint for="name" value="{{ __('The name must be lowercase') }}." />
+            <x-text-hint for="name" value="{{ __('The name must be lowercase') }}." />
             <x-input-error for="name" class="mt-2" />
         </div>
 
@@ -74,7 +74,7 @@
             <x-label for="last_name" value="{{ __('Last name') }}" />
             <x-input id="last_name" type="text" class="mt-1 block w-full" wire:model="state.last_name"
                 autocomplete="last_name" />
-                <x-text-hint for="last_name" value="{{ __('The lastname must be lowercase') }}." />
+            <x-text-hint for="last_name" value="{{ __('The lastname must be lowercase') }}." />
             <x-input-error for="last_name" class="mt-2" />
         </div>
 
@@ -136,7 +136,10 @@
 
         <div class="col-span-6 sm:col-span-4">
             <x-label for="occupation" value="{{ __('Occupation') }}" />
-            @if (count($occupations) < 8)
+            <x-input id="occupation" type="text" class="mt-1 block w-full" wire:model="state.occupation"
+                autocomplete="occupation" />
+
+            {{-- @if (count($occupations) < 8)
 
                 <select wire:model="state.occupation_id"
                     class="block mt-1 w-full border-sky-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
@@ -148,18 +151,104 @@
                     @endforeach
 
                 </select>
-
             @else
+                <div>
+                    <style>
+                        .select2-container {
+                            width: 100% !important;
+                        }
 
-                @livewire('dropdown-search-bar', [
-                    // 'livewireAction' => 'model="state.occupation_id"',
-                    'optionName' => 'occupation',
-                    'options' => $occupations,
-                    'valueNameField' => 'id',
-                    'slotNameField' => 'job_title',
-                ])
+                        .select2-container--default .select2-selection--single {
+                            height: 42px;
+                            padding: 0.5rem 0.75rem;
+                            margin-top: 0.25rem;
+                            font-size: 1rem;
+                            border-color: #0ea5e9;
+                            opacity: 1;
+                            border-radius: 0.375rem;
+                            box-sizing: border-box;
+                            border-style: solid;
+                        }
 
-            @endif
+                        .select2-container--default .select2-selection--single:focus {
+                            border-color: #0ea5e9;
+                            outline-color: #0ea5e9;
+                            border-width: 2px;
+                        }
+
+                        .select2-dropdown.select2-dropdown--below {
+                            width: fit-content;
+                        }
+
+                        .select2-container .select2-selection--single .select2-selection__rendered {
+                            padding-left: 0 !important;
+                            color: #030303;
+                        }
+
+                        .select2-container--default .select2-selection--single .select2-selection__rendered {
+                            line-height: 1.5rem !important;
+                        }
+
+                        .select2-container--default .select2-selection--single .select2-selection__arrow {
+                            background-color: unset;
+                            margin: inherit;
+                            width: 40px;
+                            height: 42px;
+                            position: absolute;
+                            top: 0.85rem;
+                            right: -0.75rem;
+                        }
+
+                        .select2-container--default .select2-results__option--selected {
+                            background-color: #ddd;
+                        }
+
+                        .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+                            background-color: #ea580c;
+                            color: white;
+                        }
+
+
+                        .select2-container--default .select2-search--dropdown .select2-search__field {
+                            border-color: #aaa;
+                        }
+
+                        [type="search"]:focus {
+                            --tw-ring-color: #ea580c !important
+                        }
+                    </style>
+
+                    <div>
+                        <select class="w-full h-full mt-1 text-base rounded-md box-border border border-sky-500"
+                            name="occupation" id="select2" wire:model.change="state.occupation_id">
+
+                            @foreach ($occupations as $occupation)
+                                <x-option name="occupation" value="{{ $occupation->id }}" wire:model.live="state.occupation_id">{{ $occupation->job_title }}</x-option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+                    <script>
+                        $(document).ready(function() {
+
+                            $('#select2').select2();
+                            $('#select2').on('change', function(e) {
+                                let data = $('#select2').select2("val");
+                                @this.set('selectedItem', data);
+                            });
+
+                            $('b[role="presentation"]').hide();
+                            $('.select2-container--default .select2-selection--single .select2-selection__arrow')
+                                .append(
+                                    '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"/></svg>'
+                                );
+                        });
+                    </script>
+                </div>
+
+            @endif --}}
+
             <x-input-error for="occupation" class="mt-2" />
         </div>
 
