@@ -1,0 +1,1 @@
+<img src="{{ asset('/application-logos/migratepc-mark.png') }}" {{ $attributes }} />
