@@ -2,8 +2,18 @@
 
 @section('content')
 <div>
-    <div class="overflow-x-auto">
-        <div class="container mx-auto px-4 py-4">
+  <div class="overflow-x-auto">
+    <div class="container mx-auto px-4 py-4">
+          @if (session("status"))
+              <div class="">
+                {{session( "status")}}
+              </div>
+          @endif
+          @if (session("error"))
+              <div class="">
+                {{session( "error")}}
+              </div>
+          @endif
             <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                 <thead  class="ltr:text-left rtl:text-right">
                     <tr class="bg-gray-200">
@@ -22,7 +32,7 @@
                         <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Lorem ipsum dolor sit, amet consectetur adipisicing elit. At quod</th>
                             <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                 <a
-            href="#"
+            href="{{ route(  'curso.show',$nCurso->course_name ) }}"
             class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700"
           >
             editar
@@ -38,13 +48,13 @@
                     @endforeach
                 </tbody>
             </table>
-            <a href="#" class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700 focus:outline-none focus:shadow-outline">Añadir 
+            <a href="{{ route( 'curso.create' ) }}" class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700 focus:outline-none focus:shadow-outline">Añadir 
           </a>
             <a
-            href="#"
+            href="{{ route( 'curso.index' ) }}"
             class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700 focus:outline-none focus:shadow-outline"
           >
-            Añadir 
+            Salir
           </a>
         </div>
     </div>

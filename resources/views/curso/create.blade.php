@@ -17,17 +17,7 @@
 <div class="min-h-full">
 
   <!-- Menú -->
-  <nav class="nav flex flex-wrap items-center justify-between px-4 bg-gray-800 px-20">
-    <div class="flex flex-no-shrink items-center mr-6 py-3 text-grey-darkest">
-      <span class="font-semibold text-xl tracking-tight text-white"></span>
-    </div>
 
-    <input class="menu-btn hidden" type="checkbox" id="menu-btn">
-    <label class="menu-icon block cursor-pointer md:hidden px-2 py-4 relative select-none" for="menu-btn">
-      <span class="navicon bg-grey-darkest flex items-center relative"></span>
-    </label>
-
-  </nav>
   
   <main>
     <div class="container ml-auto mr-auto flex flex-wrap items-start mt-8">
@@ -42,25 +32,40 @@
       <div class="w-full md:w-1/2">
 
         <!-- Formulario -->
-        <form class="bg-white px-8 pt-6 pb-8 mb-4">
+        <form action="{{route( 'curso.store')}}" method="POST" class="bg-white px-8 pt-6 pb-8 mb-4">
+          @csrf
+          
+          <!-- Nombre del curso -->
           <div class="mb-4">
             <div class="grid grid-flow-row sm:grid-flow-col gap-3">
               <div class="sm:col-span-4 justify-center">
                 <label class="block text-gray-700 text-sm font-bold mb-2" for="nya"> Nombres Curso </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nya" type="text" placeholder="Carlos Torres" required>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id="nya" 
+                type="text" 
+                placeholder="Carlos Torres" 
+                name="NomCurso" 
+                required>
               </div>
               <div class="sm:col-span-4 justify-center">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="email"> Docente </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="ctorres@mail.com" required>
+                <label class="block text-gray-700 text-sm font-bold mb-2"> Docente </label>
+                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                id="NomDocente" 
+                placeholder="Encargado Curso" 
+                name="id_docente"
+                required>
               </div>
             </div>
           </div>
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="mensaje"> descripcion </label>
-            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="mensaje" rows="5" placeholder="El mensaje" required></textarea>
+            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+            id="mensaje" rows="5" 
+            placeholder="El mensaje" 
+            required></textarea>
           </div>
           <div class="flex items-center justify-between">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit"> Aceptar </button>
+            <button  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit"> Aceptar </button>
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit"> Cancelar</button>
           </div>
         </form>              

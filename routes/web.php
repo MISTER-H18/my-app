@@ -46,7 +46,7 @@ Route::controller(eventController::class)->group(function(){
     Route::get('event', 'event')->name('event.event');
     Route::get('event/eventCrud', 'EventCrud') ->name('event.EventCrud');
     //Formulario de crear evento
-    Route::get('event/create', 'create')->name('event.create');
+    Route::get('event/create', 'create')->name('event.eventCreate');
     //Peticion POST para guardar el formulario de crear curso
     Route::post('event/store', 'Store')->name('event.store');
     //Mostrar informacion del curso por ID
@@ -68,9 +68,6 @@ Route::controller(CursoController::class)->group(function () {
     Route::get('curso/create','create')->name('curso.create');
 
     Route::get('curso/{id}','show' )->name('curso.show');
-
-//Formulario de edicion y actualizacion de registros
-    Route::get('curso/{curso}/edit','edit') -> name('curso.edit');
 
 //Enviar el formulario de edición a la base de datos
     Route::put('curso/{curso}','update') -> name('curso.update');

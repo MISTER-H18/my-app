@@ -20,4 +20,14 @@ class CursoController extends Controller
         $curso=DB::select("SELECT * FROM courses");
         return view('curso\cursosCrud') ->with('curso',$curso);
     }
+    //Metodo para guardar los cursos en la base de datos
+    public function store(Request $request ){
+        $sql=DB::insert( 'INSERT INTO courses (course_name, teacher_id) values(?,?)', [$request->NomCurso,$request->id_docente]);
+        if ($sql == true){
+            return back( )-> with ('status','El curso se ha agregado correctamente');
+        }else {
+            return back()-> with('error','Error al insertar el curso, intentelo nuevamente.');
+    
+        }
+    }
 }
