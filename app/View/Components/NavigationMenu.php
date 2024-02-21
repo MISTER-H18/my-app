@@ -8,15 +8,15 @@ use Illuminate\View\Component;
 
 class NavigationMenu extends Component
 {
-    
+
     public array $collection = [
         // 'menuItem' => 'routeName'
         'Dashboard' => 'dashboard',
         'Members' => 'members',
-        'Others' => [
-            'Label' => 'dashboard',
+        'Events' => [
+            'Ver Eventos' => 'event.event',
             'Another Label' => 'members',
-            'And Another Label' => 'members'
+            'And Another Label' => 'members',
         ],
         'Another Stuff' => [
             'More Stuff' => 'dashboard',
@@ -27,20 +27,19 @@ class NavigationMenu extends Component
             'And Even More Things' => 'members',
         ],
     ];
-    
+
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
-        
-    }
 
+    }
 
     /**
      * Get the view / contents that represent the component.
      */
-    public function render(): View|Closure|string
+    public function render(): View | Closure | string
     {
         return view('components.navigation-menu');
     }

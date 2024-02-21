@@ -25,47 +25,50 @@ class TeamFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => User::inRandomOrder()->first()->id,
+            'user_id' => null,
             'name' => $this->faker->unique()->company(),
             'description' => $this->faker->text(90),
             'personal_team' => array_rand([true, false]),
         ];
     }
 
-    // public function configure(callable $callback = null): static
+    // public function withPersonalTeam(callable $callback = null): static
     // {
     //     if (!Features::hasTeamFeatures()) {
     //         return $this->state([]);
     //     }
 
     //     return $this->has(
-    //         User::factory()
-    //             ->state(fn(array $attributes, Team $team) => [
-
-    //                 'identity_card' => $this->faker->unique()->numberBetween(10000000, 30000000),
-    //                 'name' => strtolower($this->faker->firstName()),
-    //                 'last_name' => strtolower($this->faker->lastName()),
-    //                 'date_of_birth' => $this->faker->date('Y-m-d', Carbon::now()->subDays(rand(0, 180))),
-    //                 'sex' => array_rand([0, 1]),
-    //                 'phone_number' => $this->faker->phoneNumber(),
-    //                 'address' => strtolower($this->faker->address()),
-    //                 'occupation' => strtolower($this->faker->unique()->jobTitle()),
-    //                 'email' => $this->faker->unique()->safeEmail(),
-    //                 'email_verified_at' => Carbon::now()->subDays(rand(0, 179))->format('Y-m-d'),
-    //                 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-    //                 'two_factor_secret' => null,
-    //                 'two_factor_recovery_codes' => null,
-    //                 'remember_token' => Str::random(10),
-
-    //                 'profile_photo_path' => null,
-    //                 'current_team_id' => $team->id,
-    //                 'marital_status_id' => MaritalStatus::inRandomOrder()->first()->id,
-    //                 'user_rol_id' => UserRoles::inRandomOrder()->first()->id,
-
+    //         Team::factory()
+    //             ->state(fn(array $attributes, User $user) => [
+    //                 'user_id' => $user->id,
+    //                 'name' => "Equipo personal de " . explode(' ', ucfirst($user->name), 2)[0],
+    //                 'description' => 'Este es el equipo personal de ' . explode(' ', ucfirst($user->name), 2)[0],
+    //                 'personal_team' => true,
     //             ])
     //             ->when(is_callable($callback), $callback),
-    //         'owner'
-    //     );
+    //         'ownedTeams'
+    //     )->afterCreating(function (User $user) {
+    //         $user->current_team_id = $user->id;
+    //         $user->save();
+    //     });
+    // }
+
+    // public function configure()
+    // {
+    //     return $this->afterCreating(function (User $user) {
+
+    //         $user->save(User::forceCreate([
+    //             'user_id' => $user->id,
+    //             'name' => "Equipo personal de ". explode(' ', ucfirst($user->name), 2)[0],
+    //             'description' => 'Este es el equipo personal de '. explode(' ', ucfirst($user->name), 2)[0],
+    //             'personal_team' => true,
+    //         ]))->afterCreating(function (Team $team) {
+    //             $team->user_id = $user->id;
+    //             $team->save();
+    //         });
+            
+    //     });
     // }
 
 }

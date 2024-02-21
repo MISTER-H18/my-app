@@ -201,7 +201,8 @@
                     </x-responsive-nav-link>
                 @else
                 <div class="group"> {{-- click here --}}
-                        <x-responsive-nav-link class="select-none"> 
+                        <x-responsive-nav-link cla
+                        ss="select-none"> 
                             <div class="m-0 mx-auto p-0 flex items-center">
                                 {{ __($item) }}
 

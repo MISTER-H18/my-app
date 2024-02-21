@@ -2,15 +2,14 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use Laravel\Jetstream\Features;
-use Carbon\Carbon;
-
 use App\Models\MaritalStatus;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\UserRoles;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+use Laravel\Jetstream\Features;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -47,29 +46,6 @@ class UserFactory extends Factory
         ];
     }
 
-    // public function configure()
-    // {
-    //     return $this->afterCreating(function (User $user) {
-
-    //         $user->ownedTeams()->save(Team::forceCreate([
-    //             'user_id' => $user->id,
-    //             'name' => "Equipo personal de ". explode(' ', ucfirst($user->name), 2)[0],
-    //             'description' => 'Este es el equipo personal de '. explode(' ', ucfirst($user->name), 2)[0],
-    //             'personal_team' => true,
-    //         ]));
-            
-    //     });
-    // }
-
-    // public function configure()
-    // {
-    //     return $this->state(function (Team $team) {
-    //         return [
-    //             'current_team_id' => $team->id,
-    //         ];
-    //     });
-    // }
-
     /**
      * Indicate that the model's email address should be unverified.
      */
@@ -95,12 +71,15 @@ class UserFactory extends Factory
             Team::factory()
                 ->state(fn(array $attributes, User $user) => [
                     'user_id' => $user->id,
-                    'name' => "Equipo personal de ". explode(' ', ucfirst($user->name), 2)[0],
-                    'description' => 'Este es el equipo personal de '. explode(' ', ucfirst($user->name), 2)[0],
+                    'name' => "Equipo personal de " . explode(' ', ucfirst($user->name), 2)[0],
+                    'description' => 'Este es el equipo personal de ' . explode(' ', ucfirst($user->name), 2)[0],
                     'personal_team' => true,
                 ])
                 ->when(is_callable($callback), $callback),
             'ownedTeams'
-        );
+        )->afterCreating(function (User $user) {
+            $user->current_team_id = $user->id;
+            $user->save();
+        });
     }
 }

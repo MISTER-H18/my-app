@@ -19,13 +19,15 @@ class DatabaseSeeder extends Seeder
             'user_roles',
             'users',
             'teams',
+            'events',
         ]);
 
         $this->call([
             MaritalStatusSeeder::class,
             UserRolesSeeder::class,
             UserSeeder::class,
-            TeamSeeder::class,
+            // TeamSeeder::class,
+            EventSeeder::class,
         ]);
         
     }
