@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             'user_roles',
             'users',
             'teams',
+            'team_user',
             'events',
         ]);
 
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
             UserRolesSeeder::class,
             UserSeeder::class,
             // TeamSeeder::class,
+            MembershipSeeder::class,
             EventSeeder::class,
         ]);
         

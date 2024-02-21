@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-Class Course extends Model
+class Course extends Model
 {
-Use Hasfactory;
+    use Hasfactory;
 
-Protected $table='course';
+    protected $table = 'course';
 
-Protected $primaryKey='id';
+    protected $primaryKey = 'id';
 
-Protected $fillable = [
-'course_name',
-'teacher_id'
-];
+    protected $fillable = [
+        'course_name',
+        'teacher_id',
+    ];
 
 }

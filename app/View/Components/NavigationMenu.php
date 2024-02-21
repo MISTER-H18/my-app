@@ -13,19 +13,19 @@ class NavigationMenu extends Component
         // 'menuItem' => 'routeName'
         'Dashboard' => 'dashboard',
         'Members' => 'members',
-        'Events' => [
-            'Ver Eventos' => 'event.event',
-            'Another Label' => 'members',
-            'And Another Label' => 'members',
+        'Evento' => 'event.event',
+        'Cursos' => [
+            'Ver Cursos' => 'curso.index',
+            'Crear Curso' => 'curso.create',
         ],
-        'Another Stuff' => [
-            'More Stuff' => 'dashboard',
-            'And Even More Stuff' => 'members',
-        ],
-        'Another Things' => [
-            'More Things' => 'dashboard',
-            'And Even More Things' => 'members',
-        ],
+        // 'Another Stuff' => [
+        //     'More Stuff' => 'dashboard',
+        //     'And Even More Stuff' => 'members',
+        // ],
+        // 'Another Things' => [
+        //     'More Things' => 'dashboard',
+        //     'And Even More Things' => 'members',
+        // ],
     ];
 
     /**
