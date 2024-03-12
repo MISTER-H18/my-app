@@ -12,6 +12,6 @@ class MembershipSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Membership::factory(20)->create();
+        \App\Models\Membership::factory(60)->create();
     }
 }

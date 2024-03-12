@@ -9,22 +9,22 @@
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
-            <div>
+            <div class="mt-4">
                 <x-label for="identity_card" value="{{ __('Identity card') }}" />
-                <x-input id="identity_card" class="block mt-1 w-full" type="text" name="identity_card" :value="old('identity_card')"
-                    autofocus autocomplete="identity_card" />
+                <x-input id="identity_card" class="block mt-1 w-full" type="text" inputmode="numeric" pattern="[0-9]+" name="identity_card" :value="old('identity_card')" autofocus autocomplete="identity_card" />
                 <x-text-hint for="identity_card" value="{{ __('The ID must have this format') }}: 12345678." />
             </div>
 
             <div class="mt-4">
                 <x-label for="name" value="{{ __('Name') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
+                <x-input id="name" class="block mt-1 w-full" type="text" inputmode="text" pattern="[a-zA-Z]+" name="name" :value="old('name')"
                     autofocus autocomplete="name" />
+                <x-text-hint for="phone_number" value="{{ __('Only letters without spaces are alowed') }}." />
             </div>
 
             <div class="mt-4">
                 <x-label for="last_name" value="{{ __('Last name') }}" />
-                <x-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')"
+                <x-input id="last_name" class="block mt-1 w-full" type="text" inputmode="text" pattern="[a-zA-Z]+" name="last_name" :value="old('last_name')"
                     autofocus autocomplete="last_name" />
             </div>
 
@@ -36,7 +36,7 @@
 
             <div class="mt-4">
                 <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                <x-input id="email" class="block mt-1 w-full" type="email" inputmode="email" name="email" :value="old('email')"
                     autofocus autocomplete="email" />
                 <x-text-hint for="email" value="{{ __('Example of the email format: hello@example.com') }}." />
             </div>
@@ -54,14 +54,14 @@
 
             <div class="mt-4">
                 <x-label for="phone_number" value="{{ __('Phone number') }}" />
-                <x-input id="phone_number" class="block mt-1 w-full" type="tel" name="phone_number"
+                <x-input id="phone_number" class="block mt-1 w-full" type="tel" inputmode="numeric" pattern="[0-9]+" name="phone_number"
                     :value="old('phone_number')" autofocus autocomplete="phone_number" />
                 <x-text-hint for="phone_number" value="{{ __('Example of a phone number') }}: 12345678912." />
             </div>
 
             <div class="mt-4">
                 <x-label for="address" value="{{ __('Address') }}" />
-                <x-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')"
+                <x-input id="address" class="block mt-1 w-full" type="text" inputmode="text" pattern="[A-Za-z0-9 ^,&]+" name="address" :value="old('address')"
                     autofocus autocomplete="address" />
             </div>
 
@@ -82,7 +82,7 @@
 
             <div class="mt-4">
                 <x-label for="occupation" value="{{ __('Occupation') }}" />
-                <x-input id="occupation" class="block mt-1 w-full" type="text" name="occupation" :value="old('occupation')"
+                <x-input id="occupation" class="block mt-1 w-full" type="text" inputmode="text" pattern="[a-zA-Z ]+" name="occupation" :value="old('occupation')"
                     autofocus autocomplete="occupation" />
             </div>
 

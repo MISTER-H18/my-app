@@ -11,6 +11,7 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasTeams;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Carbon\Carbon;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -100,27 +101,6 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     //protected $connection = 'sqlite';
 
-
-    /**
-     * Gets the marital status for the User
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function maritalStatus(): BelongsTo
-    {
-        return $this->belongsTo(\App\Models\MaritalStatus::class, 'marital_status_id', 'id');
-    }
-
-    /**
-     * Gets the rol the User owns
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function userRol(): BelongsTo
-    {
-        return $this->belongsTo(\App\Models\UserRoles::class, 'user_rol_id', 'id');
-    }
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -150,4 +130,29 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Gets the marital status for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function maritalStatus(): BelongsTo
+    {
+        return $this->belongsTo(\App\Models\MaritalStatus::class, 'marital_status_id', 'id');
+    }
+
+    /**
+     * Gets the rol the User owns
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function userRol(): BelongsTo
+    {
+        return $this->belongsTo(\App\Models\UserRoles::class, 'user_rol_id', 'id');
+    }
+
+    public function age()
+    {
+        return Carbon::parse($this->attributes['date_of_birth'])->age;
+    }
 }

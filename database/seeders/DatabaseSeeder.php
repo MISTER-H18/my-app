@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             MaritalStatusSeeder::class,
             UserRolesSeeder::class,
             UserSeeder::class,
-            // TeamSeeder::class,
+            TeamSeeder::class,
             MembershipSeeder::class,
             EventSeeder::class,
         ]);

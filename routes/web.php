@@ -3,6 +3,7 @@
 use App\Http\Controllers\CursoController;
 use App\Http\Controllers\eventController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SystemSettingsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,15 +34,9 @@ Route::middleware([
 
     Route::get('/dashboard', HomeController::class)->name('dashboard');
 
-    Route::controller(UserController::class)->group(function () {
-        Route::get('/members', 'index')->name('members');
-        Route::post('/members', 'store');
-        Route::get('/members/{id}', 'show');
-        Route::put('/members/{id}/update', 'update');
-        Route::delete('/members/{id}', 'destroy');
-    });
+    Route::resource('members', UserController::class)->name('index', 'members');
 
-    //
+    Route::get('/system-settings', [SystemSettingsController::class, 'show'])->name('system-settings.show');
 
     Route::controller(eventController::class)->group(function () {
         Route::get('event', 'event')->name('event.event');
