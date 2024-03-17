@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Pagination\CursorPaginator;
 
 class UserController extends Controller
 {
@@ -21,9 +25,18 @@ class UserController extends Controller
         }
 
         if (!empty($keyword)) {
-            $users = User::where('name', 'LIKE', "%$keyword%")->orWhere('last_name', 'LIKE', "%$keyword%")->orWhere('identity_card', 'LIKE', "%$keyword%")->latest()->paginate($perPage);
+            $users = User::whereNot(function (Builder $query) {
+                $query->where('user_rol_id', '=', 1)
+                    ->orWhereNull('user_rol_id');
+            })->where('name', 'LIKE', "%$keyword%")
+                ->orWhere('last_name', 'LIKE', "%$keyword%")
+                ->orWhere('identity_card', 'LIKE', "%$keyword%")
+                ->latest()->paginate($perPage); //CursorPaginator
         } else {
-            $users = User::paginate($perPage);
+            $users = User::whereNot(function (Builder $query) {
+                $query->where('user_rol_id', '=', 1)
+                    ->orWhereNull('user_rol_id');
+            })->paginate($perPage); //CursorPaginator
         }
         return view('members.index', ['users' => $users, 'perPage' => $perPage])->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -41,33 +54,47 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //must validate first
+        $request->validate([
+            'identity_card' => 'required|numeric|unique:users,identity_card',
+            'name' => 'required|string|alpha|max:40|min:3',
+            'last_name' => 'required|string|alpha|max:40|min:3',
+            'date_of_birth' => 'required|date',
+            'phone_number' => 'required|numeric|digits:11|regex:/^([0-9\s\-\+\(\)]*)$/',
+            'address' => 'required|string|max:255|min:10',
+            'occupation' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|min:10|unique:users,email',
+            'marital_status_id' => 'required',
+            'password' => 'required',
+        ]);
+
         $user = new User;
 
         $user->identity_card = $request->identity_card;
-        $user->name = $request->name;
-        $user->last_name = $request->last_name;
+        $user->name = Str::lower($request->name);
+        $user->last_name = Str::lower($request->last_name);
         $user->date_of_birth = $request->date_of_birth;
         $user->sex = $request->sex;
         $user->phone_number = $request->phone_number;
-        $user->address = $request->address;
+        $user->address = Str::lower($request->address);
+        $user->occupation = Str::lower($request->occupation);
         $user->marital_status_id = $request->marital_status_id;
-        $user->occupation = $request->occupation;
+        $user->user_rol_id = 1;
         $user->email = $request->email;
-
         $user->password = Hash::make($request->password);
 
         $user->save();
 
-        return redirect()->route('members.index')->with('success', 'New User Added');
+        return to_route('members.show', ['member' => $user->id]);
+        // ->with('success','Post created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show($id)
     {
-
+        $user = User::findOrFail($id);
+        return view("members.show", compact('user'));
     }
 
     /**
@@ -76,14 +103,42 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        return view("members.edit", compact('user'));
+        return view("members.edit", ['user' => $user]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
+        $request->validate([
+            'identity_card' => 'required|numeric',
+            'name' => 'required|string|alpha|max:40|min:3',
+            'last_name' => 'required|string|alpha|max:40|min:3',
+            'date_of_birth' => 'required|date',
+            'phone_number' => 'required|numeric|digits:11|regex:/^([0-9\s\-\+\(\)]*)$/',
+            'address' => 'required|string|max:255|min:10',
+            'occupation' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|min:10',
+            'marital_status_id' => 'required',
+        ]);
+
+        $user = User::findOrFail($id);
+
+        $user->identity_card = $request->identity_card;
+        $user->name = Str::lower($request->name);
+        $user->last_name = Str::lower($request->last_name);
+        $user->date_of_birth = $request->date_of_birth;
+        $user->sex = $request->sex;
+        $user->phone_number = $request->phone_number;
+        $user->address = Str::lower($request->address);
+        $user->occupation = Str::lower($request->occupation);
+        $user->email = $request->email;
+        $user->marital_status_id = $request->marital_status_id;
+
+        $user->save();
+
+        return to_route('members.show', $user->id);
     }
 
     /**

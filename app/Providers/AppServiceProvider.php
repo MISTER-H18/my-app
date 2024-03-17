@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {        
-        Facades\View::composer(['profile.update-profile-information-form', 'auth.register', 'members.create-member-form'], function (View $view) {
+        Facades\View::composer(['profile.update-profile-information-form', 'auth.register', 'members.create-member-form', 'members.edit'], function (View $view) {
             
             $marital_statuses = MaritalStatus::select('id', 'status_name')->orderBy('id', 'ASC')->get();
 

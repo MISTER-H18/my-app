@@ -1,6 +1,6 @@
 <div class="md:grid md:grid-cols-3 md:gap-6">
     <x-section-title>
-        <x-slot name="title">{{ __('Create') }} {{ __('Members') }}</x-slot>
+        <x-slot name="title">{{ __('Edit') }} {{ __('Members') }}</x-slot>
         <x-slot name="description">{{ __('Create a new record for members and insert it into the database.') }}</x-slot>
     </x-section-title>
 
@@ -13,7 +13,7 @@
                     <!-- Identity Card -->
                     <div class="col-span-6 sm:col-span-4">
                         <x-label for="identity_card" value="{{ __('Identity card') }}" />
-                        <x-input id="identity_card" type="text" inputmode="numeric" pattern="[0-9]+"
+                        <x-input id="identity_card" type="text" inputmode="numeric" pattern="[0-9]+" value="{{ $user->identity_card }}"
                             class="mt-1 block w-full disabled:opacity-50" name="identity_card" autofocus
                             autocomplete="identity_card" />
 
@@ -100,8 +100,8 @@
 
                     <div class="col-span-6 sm:col-span-4">
                         <x-label for="occupation" value="{{ __('Occupation') }}" />
-                        <x-input id="occupation" type="text"
-                            class="mt-1 block w-full" name="occupation" autofocus autocomplete="occupation" />
+                        <x-input id="occupation" type="text" class="mt-1 block w-full" name="occupation"
+                            autofocus autocomplete="occupation" />
 
                         <x-input-error for="occupation" class="mt-2" />
                     </div>
@@ -130,16 +130,17 @@
 
                     <!-- Confirm Password -->
                     {{-- <div class="col-span-6 sm:col-span-4">
-                        <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                        <x-input id="password_confirmation" type="password" class="mt-1 block w-full"
-                            name="password_confirmation" autofocus autocomplete="password_confirmation" />
-
-                        <x-input-error for="password_confirmation" class="mt-2" />
-                    </div> --}}
+                         <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
+                         <x-input id="password_confirmation" type="password" class="mt-1 block w-full"
+                             name="password_confirmation" autofocus autocomplete="password_confirmation" />
+ 
+                         <x-input-error for="password_confirmation" class="mt-2" />
+                     </div> --}}
                 </div>
             </div>
 
-            <div class="flex items-center justify-end px-4 py-3 bg-gray-50 text-end sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
+            <div
+                class="flex items-center justify-end px-4 py-3 bg-gray-50 text-end sm:px-6 shadow sm:rounded-bl-md sm:rounded-br-md">
                 <x-action-message class="me-3" on="saved">
                     {{ __('Saved.') }}
                 </x-action-message>

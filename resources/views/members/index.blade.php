@@ -86,90 +86,106 @@
                                         @foreach ($users as $user)
                                             <tr class="hover:bg-gray-100 cursor-pointer">
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-sky-700">
-                                                    {{ $user->id }}
+                                                    <a href="{{ route('members.show', $user->id) }}">
+                                                        <div class="w-full">
+                                                            {{ $user->id }}
+                                                        </div>
+                                                    </a>
                                                 </td>
 
-                                                {{-- Create, view tr is clicked, update, and delete --}}
                                                 <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                    <a href="{{ route('members.show', $user->id) }}">
+                                                        <div class="w-full my-2 flex flex-row items-center">
+                                                            <div class="shrink-0 w-11 h-11 whitespace-nowrap">
+                                                                <img class="block w-11 h-11 rounded-full overflow-hidden object-cover"
+                                                                    src="{{ $user->profile_photo_url }}"
+                                                                    alt="{{ $user->name }}">
+                                                            </div>
 
-                                                    <div class="w-full my-2 flex flex-row items-center">
-                                                        <div class="shrink-0 w-11 h-11 whitespace-nowrap">
-                                                            <img class="block w-11 h-11 rounded-full overflow-hidden object-cover"
-                                                                src="{{ $user->profile_photo_url }}"
-                                                                alt="{{ $user->name }}">
+                                                            <div class="ml-4 text-nowrap text-left">
+                                                                <div class="text-gray-900 font-medium">
+                                                                    {{ Str::ucfirst($user->name) }}
+                                                                    {{ Str::ucfirst($user->last_name) }}
+                                                                </div>
+                                                                <div class="text-gray-700 font-normal">
+                                                                    C.I {{ $user->identity_card }}
+                                                                </div>
+                                                                <div class="text-gray-600 italic">
+                                                                    {{ $user->email }}
+                                                                </div>
+                                                            </div>
                                                         </div>
-
-                                                        <div class="ml-4 text-nowrap text-left">
-                                                            <div class="text-gray-900 font-medium">
-                                                                {{ Str::ucfirst($user->name) }}
-                                                                {{ Str::ucfirst($user->last_name) }}
-                                                            </div>
-                                                            <div class="text-gray-700 font-normal">
-                                                                C.I {{ $user->identity_card }}
-                                                            </div>
-                                                            <div class="text-gray-600 italic">
-                                                                {{ $user->email }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
+                                                    </a>
                                                 </td>
 
                                                 <td class="px-3 py-4 whitespace-normal text-sm text-gray-900 min-w-56">
-                                                    <div class="w-full my-2 flex flex-row items-center">
-                                                        <div class="text-nowrap text-left">
-                                                            <span
-                                                                class="bg-orange-100 shadow-md text-orange-600 border border-orange-300 font-medium text-sm py-2 px-2 rounded-md items-center">
-                                                                {{ Str::ucfirst($user->userRol->rol_name) }}
-                                                            </span>
-
-                                                            <div class="text-gray-700 font-normal mt-3">
-                                                                {{ Str::ucfirst($user->occupation) }}
+                                                    <a href="{{ route('members.show', $user->id) }}">
+                                                        <div class="w-full my-2 flex flex-row items-center">
+                                                            <div class="text-nowrap text-left">
+                                                                <div class="text-gray-700 font-normal mt-3">
+                                                                    {{ Str::ucfirst($user->occupation) }}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </a>
                                                 </td>
 
                                                 <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                    <div class="w-full my-2 flex flex-row items-center">
-                                                        <div class="text-nowrap text-center">
-                                                            <div class="text-gray-700 font-normal mb-2">
-                                                                {{ $user->date_of_birth }}
-                                                            </div>
-                                                            <div class="text-gray-600 italic">
-                                                                {{ $user->age() }} {{ __('years old') }}
+                                                    <a href="{{ route('members.show', $user->id) }}">
+                                                        <div class="w-full my-2 flex flex-row items-center">
+                                                            <div class="text-nowrap text-center">
+                                                                <div class="text-gray-700 font-normal mb-2">
+                                                                    {{ Carbon\Carbon::createFromFormat('Y-m-d', $user->date_of_birth)->format('d/m/Y') }}
+                                                                </div>
+                                                                <div class="text-gray-600 italic">
+                                                                    {{ $user->age() }} {{ __('years old') }}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </a>
                                                 </td>
 
                                                 <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                    {{ $user->maritalStatus->status_name }}
+                                                    <a href="{{ route('members.show', $user->id) }}">
+                                                        <div class="w-full">
+                                                            {{ $user->maritalStatus->status_name }}
+                                                        </div>
+                                                    </a>
                                                 </td>
 
                                                 <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                    @if ($user->sex == 1)
-                                                        {{ __('Male') }}
-                                                    @else
-                                                        {{ __('Female') }}
-                                                    @endif
+                                                    <a href="{{ route('members.show', $user->id) }}">
+                                                        <div class="w-full">
+                                                            {{ $user->sex == 1 ? 'Masculino' : 'Femenino' }}
+                                                        </div>
+                                                    </a>
                                                 </td>
 
                                                 <td class="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
-                                                    {{ $user->phone_number }}
+                                                    <a href="{{ route('members.show', $user->id) }}">
+                                                        <div class="w-full">
+                                                            {{ $user->phone_number }}
+                                                        </div>
+                                                    </a>
                                                 </td>
 
                                                 <td class="px-3 py-4 whitespace-normal text-sm text-gray-900 min-w-60">
-                                                    {{ $user->address }}
+                                                    <a href="{{ route('members.show', $user->id) }}">
+                                                        <div class="w-full">
+                                                            {{ $user->address }}
+                                                        </div>
+                                                    </a>
                                                 </td>
 
-                                                <td class="grid grid-rows-1 gap-2 px-2 py-3 whitespace-nowrap text-sm font-medium">
+                                                <td
+                                                    class="grid grid-rows-1 gap-2 px-2 py-3 whitespace-nowrap text-sm font-medium">
+
                                                     <a class="inline-flex items-center justify-center px-4 py-2 bg-sky-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-sky-600 focus:bg-sky-600 active:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                                                    
-                                                    href="{{ route('members.edit', $user->id) }}">
+                                                        href="{{ route('members.edit', $user->id) }}">
                                                         {{ __('Edit') }}
                                                     </a>
                                                     @livewire('members.delete-user-modal-confirm', ['user_id' => $user->id])
+
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -202,7 +218,7 @@
                     </div>
                 </div>
                 <div class="w-full my-4 px-2">
-                    {{ $users->onEachSide(3)->links() }}
+                    {{ $users->links() }}
                 </div>
             @else
                 <div class="min-w-full min-h-96 flex justify-center items-center">
@@ -210,7 +226,8 @@
                         <p class="text-orange-800 mb-3">{{ __('No results found') }}</p>
                         <p class="text-gray-500 mb-0">
                             {{ __("No entries were found, check your database if there's any issue.") }}</p>
-                        <a href="/dashboard" class="text-orange-800">&larr; {{ __('Go Back to Dashboard') }}</a>
+                        <a href="{{ route('members') }}" class="text-orange-800">&larr;
+                            {{ __('Vuelve a Intentarlo') }}</a>
                     </div>
                 </div>
             @endif
