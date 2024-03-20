@@ -54,16 +54,17 @@
         <!-- Identity Card -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="identity_card" value="{{ __('Identity card') }}" />
-            <x-input id="identity_card" type="text" class="mt-1 block w-full disabled:opacity-50" wire:model="state.identity_card"
+            <x-input id="identity_card" type="text" inputmode="numeric" pattern="[0-9]+"
+                class="mt-1 block w-full disabled:opacity-50" wire:model="state.identity_card"
                 autocomplete="identity_card" disabled />
-            <x-text-hint for="identity_card" value="{{ __('The ID must have this format') }}: 12345678." />
+            {{-- <x-text-hint for="identity_card" value="{{ __('The ID must have this format') }}: 12345678." /> --}}
             <x-input-error for="identity_card" class="mt-2" />
         </div>
 
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="name" value="{{ __('Name') }}" />
-            <x-input id="name" type="text" class="mt-1 block w-full" wire:model="state.name"
+            <x-input id="name" type="text" inputmode="text" pattern="[a-zA-Z]+" class="mt-1 block w-full" wire:model="state.name"
                 autocomplete="name" />
             <x-input-error for="name" class="mt-2" />
         </div>
@@ -71,8 +72,8 @@
         <!-- Last Name -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="last_name" value="{{ __('Last name') }}" />
-            <x-input id="last_name" type="text" class="mt-1 block w-full" wire:model="state.last_name"
-                autocomplete="last_name" />
+            <x-input id="last_name" type="text" inputmode="text" pattern="[a-zA-Z]+" class="mt-1 block w-full"
+                wire:model="state.last_name" autocomplete="last_name" />
             <x-input-error for="last_name" class="mt-2" />
         </div>
 
@@ -101,9 +102,9 @@
         <!-- Phone Number -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="phone_number" value="{{ __('Phone number') }}" />
-            <x-input id="phone_number" type="tel" class="mt-1 block w-full" wire:model="state.phone_number"
-                autocomplete="phone_number" />
-                
+            <x-input id="phone_number" type="tel" inputmode="numeric" pattern="[0-9]+" class="mt-1 block w-full"
+                wire:model="state.phone_number" autocomplete="phone_number" />
+
             <x-text-hint for="phone_number" value="{{ __('Example of a phone number') }}: 12345678912." />
             <x-input-error for="phone_number" class="mt-2" />
         </div>
@@ -111,7 +112,7 @@
         <!-- Address -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="address" value="{{ __('Address') }}" />
-            <x-input id="address" type="text" class="mt-1 block w-full" wire:model="state.address"
+            <x-input id="address" type="text" inputmode="text" pattern="[A-Za-z0-9 ^,&]+" class="mt-1 block w-full" wire:model="state.address"
                 autocomplete="address" />
             <x-input-error for="address" class="mt-2" />
         </div>
@@ -136,8 +137,8 @@
 
         <div class="col-span-6 sm:col-span-4">
             <x-label for="occupation" value="{{ __('Occupation') }}" />
-            <x-input id="occupation" type="text" class="mt-1 block w-full" wire:model="state.occupation"
-                autocomplete="occupation" />
+            <x-input id="occupation" type="text" inputmode="text" pattern="[a-zA-Z ]+" class="mt-1 block w-full"
+                wire:model="state.occupation" autocomplete="occupation" />
 
             <x-input-error for="occupation" class="mt-2" />
         </div>
@@ -145,8 +146,8 @@
         <!-- Email -->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="email" value="{{ __('Email') }}" />
-            <x-input id="email" type="email" class="mt-1 block w-full" wire:model="state.email"
-                autocomplete="email" />
+            <x-input id="email" type="email" inputmode="email" class="mt-1 block w-full"
+                wire:model="state.email" autocomplete="email" />
 
             <x-text-hint for="email" value="{{ __('Example of the email format: hello@example.com') }}." />
             <x-input-error for="email" class="mt-2" />

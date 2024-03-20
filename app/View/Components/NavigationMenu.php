@@ -12,24 +12,22 @@ class NavigationMenu extends Component
     public array $collection = [
         // 'menuItem' => 'routeName'
         'Dashboard' => 'dashboard',
-        'Members' => 'members',
-        'Events' => [
+        'Eventos' => [
             'Ver Eventos' => 'event.event',
             'Añadir Eventos' => 'event.EventCrud',
-            'And Another Label' => 'members',
         ],
         'Cursos' => [
             'Visualizar curso' => 'curso.index',
             'Modificar curso' => 'curso.cursoCrud',
         ],
         'finanzas' => [
-            'Estadisticas' => 'dashboard',
-            'Registrar mov.' => 'members',
+            'Movimientos' => 'finanzas.index',
         ],
         'Censo' => [
-            'Estadistica' => 'dashboard',
+            'Estadistica' => 'user.estadistica',
             'Registrar' => 'members',
         ],
+        'Configuración' => 'members',
     ];
 
     /**

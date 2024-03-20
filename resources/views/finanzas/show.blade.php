@@ -23,7 +23,7 @@
                 <div class="container ml-auto mr-auto flex flex-wrap items-start mt-8">
 
                     <div class="w-full pl-2 pr-2 mb-4 mt-4">
-                        <h1 class="text-3xl font-extrabold text-center"> Curso </h1>
+                        <h1 class="text-3xl font-extrabold text-center"> Transacción </h1>
                     </div>
 
                 </div>
@@ -32,61 +32,89 @@
                     <div class="w-full md:w-1/2">
 
                         <!-- Formulario -->
-                        <form action="{{ route('curso.store') }}" method="POST" class="bg-white px-8 pt-6 pb-8 mb-4">
+                        <form action="{{ route('finanza.update') }}" method="POST" class="bg-white px-8 pt-6 pb-8 mb-4">
                             @csrf
-                            @foreach ($curso as $nCurso)
-                            <!-- Nombre del curso -->
-                            <div class="mb-4">
-                                <div class="grid grid-flow-row sm:grid-flow-col gap-3">
-                                    <div class="sm:col-span-4 justify-center">
-                                        <label class="block text-gray-700 text-sm font-bold mb-2" for="nya"> Nombres
-                                            Curso </label>
-                                        <input
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="nya" type="text" value="{{$nCurso->course_name }}" name="NomCurso" required>
-                                    </div>
-                                    <div class="sm:col-span-4 justify-center">
-                                        <label class="block text-gray-700 text-sm font-bold mb-2"> Docente </label>
-                                        <input
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            value="{{$nCurso->teacher_id }}"
-                                            id="NomDocente" placeholder="Encargado Curso" name="id_docente" required>
-                                    </div>
-                                </div>
-                                <div class="grid grid-flow-row sm:grid-flow-col gap-3">
-                                    <div class="sm:col-span-4 justify-center">
-                                        <label class="block text-gray-700 text-sm font-bold mb-2" for="nya"> Fecha
-                                            Inicio </label>
-                                        <input
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="nya" type="date" name="InCurso" required>
-                                    </div>
-                                    <div class="sm:col-span-4 justify-center">
-                                        <label class="block text-gray-700 text-sm font-bold mb-2"> Fecha de culminacion
-                                        </label>
-                                        <input
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="NomDocente" type="date" name="FinCurso" required>
+                            @foreach ($transaction as $nTransaction)
+                                <div class="mb-4">
+                                    <div class="grid grid-flow-row sm:grid-flow-col gap-3">
+                                        <div class="sm:col-span-4 justify-center">
+                                            <label class="block text-gray-700 text-sm font-bold mb-2" for="nya">
+                                                Monto</label>
+                                            <input
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                value="{{ $nTransaction->monto }}"
+                                                inputmode="numeric"
+                                                pattern="^([0-9]{1,10})(.[0-9]{1,2})?$"
+                                                name="monto" type="number" required>
+                                        </div>
+                                        <div class="sm:col-span-4 justify-center">
+                                            <label class="block text-gray-700 text-sm font-bold mb-2" for="email"> Fecha
+                                                de registro
+                                            </label>
+                                            <input
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                id="email" value="{{ $nTransaction->fecha }}" name="fecha"
+                                                type="date" required>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="mb-4">
-                                <label class="block text-gray-700 text-sm font-bold mb-2" for="mensaje"> descripcion
-                                </label>
-                                <textarea
+                                <input
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="mensaje" rows="5" placeholder="El mensaje" required></textarea>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <button
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                    type="submit"> Aceptar </button>
-                                <a href="{{ route('curso.cursoCrud') }}"
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                    Cancelar</a>
-                            </div>
+                                    type="hidden" value="{{ $nTransaction->id }}" name="id" hidden required>
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="email"> Tipo
+                                </label>
+                                <select
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    name="tipo" required>
+                                    @if ($nTransaction->tipo == 1)
+                                        <option value="1">Egreso</option>
+                                        <option value="0">Ingreso</option>
+                                    @else
+                                        <option value="0">Ingreso</option>
+                                        <option value="1">Egreso</option>
+                                    @endif
+                                </select>
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="email"> Usuario
+                                </label>
+                                <select
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    name="user_id" required>
+                                    @foreach ($users as $user)
+                                        @if ($nTransaction->user_id == $user->id)
+                                            <option value="{{ $nTransaction->user_id }}">{{ $nTransaction->name }}
+                                                {{ $nTransaction->last_name }}</option>
+                                        @else
+                                            <option value="{{ $user->id }}"> {{ $user->name }} {{ $user->last_name }}
+                                            </option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                <div class="mb-4">
+                                    <label class="block text-gray-700 text-sm font-bold mb-2" for="mensaje"> Descripción
+                                    </label>
+                                    <input
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="mensaje" 
+                                        value="{{ $nTransaction->descripcion }}" 
+                                        rows="5"
+                                        inputmode="text"
+                                        pattern="^([a-zA-Z0-9_\-\. ]{1,255})$" 
+                                        name="description" placeholder="El mensaje"
+                                        required>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <button
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                        type="submit"> Aceptar
+                                    </button>
+
+                                    <a href="{{ route('finanza.create') }}"
+                                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                        <i class="">Salir</i>
+                                    </a>
+                                </div>
                         </form>
-                         @endforeach
+                        @endforeach
                     </div>
 
                 </div>
@@ -107,12 +135,32 @@
         </footer>
 
         <div class="pccp mt-2" align="center">
-            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2390065838671224"
                 data-ad-slot="1441100372" data-ad-format="auto" data-full-width-responsive="true"></ins>
             <script>
-                (adsbygoogle = window.adsbygoogle || []).push({});
+                const numericInputs = document.querySelectorAll("[inputmode='numeric']");
+
+                const textInputs = document.querySelectorAll("[inputmode='text']");
+
+                numericInputs.forEach((input) => {
+                    validateInput(input);
+                });
+
+                function validateInput(el) {
+                    el.addEventListener("beforeinput", function(e) {
+                        let beforeValue = el.value;
+                        e.target.addEventListener(
+                            "input",
+                            function() {
+                                if (el.validity.patternMismatch) {
+                                    el.value = beforeValue;
+                                }
+                            }, {
+                                once: true
+                            }
+                        );
+                    });
+                }
             </script>
         </div>
 

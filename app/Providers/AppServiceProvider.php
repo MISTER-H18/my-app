@@ -22,9 +22,8 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {
-        
-        Facades\View::composer(['profile.update-profile-information-form', 'auth.register'], function (View $view) {
+    {        
+        Facades\View::composer(['profile.update-profile-information-form', 'auth.register', 'members.create-member-form'], function (View $view) {
             
             $marital_statuses = MaritalStatus::select('id', 'status_name')->orderBy('id', 'ASC')->get();
 

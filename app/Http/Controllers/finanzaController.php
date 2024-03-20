@@ -1,53 +1,131 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class CursoController extends Controller
+class finanzaController extends Controller
 {
-    public function index(){
-        $curso=DB::select("SELECT * FROM courses");
-        return view('curso\inicioCurso')-> with ('curso',$curso); 
-    }
-    public function create(){
-        return view('curso\create');
-    }
-    public function destroy($id){
-            $sqls=DB::delete(  "DELETE FROM courses WHERE id = $id");
-            $cursos=DB::select("SELECT * FROM courses");
-        if ($sqls == true){
-            return view('curso\cursosCrud' )-> with ('curso',$cursos);
-        }else {
-            return view('curso\cursosCrud')-> with('curso',$cursos);
-            
+    public function update(Request $request)
+    {
+        try {
+            $sql = DB::update("UPDATE transaction SET fecha=?, descripcion=?, monto=?, tipo=?, user_id=? WHERE id=? ", [
+                $request->fecha,
+                $request->description,
+                $request->monto,
+                $request->tipo,
+                $request->user_id,
+                $request->id,
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $sql = 0;
         }
-        
+        if ($sql == true) {
+            return redirect()->route('finanzas.index')->with('success', '¡Transacción modificada exitosamente!');;
+        } else {
+            return back()->with('error', 'Falló de la transacción. Intenta nuevamente.');
+        }
     }
-    public function show($id){
-        $curso= DB::select("SELECT * FROM courses WHERE id = $id") ;
-        return view('curso\show') ->with('curso',$curso);  
+    public function index()
+    {
+        $transaccionTotal = DB::select("SELECT SUM(CASE tipo
+        WHEN 1 THEN monto
+        ELSE 0
+    END) AS total_monto
+    FROM transaction;");
+        $graficaIngreso = DB::select("SELECT MONTH(fecha) AS mes, SUM(monto) AS total_monto
+        FROM transaction
+        WHERE tipo = 0
+        GROUP BY MONTH(fecha);");
+        $dataP = [];
+        foreach ($graficaIngreso as $comparacion) {
+            $dataP['mes'][] = $comparacion->mes;
+            $dataP['comparacion'][] = $comparacion->total_monto;
+        }
+        $dataP['dataP'] = json_encode($dataP);
+
+        $graficaEgres = DB::select("SELECT MONTH(fecha) AS mes, SUM(monto) AS total_monto
+        FROM transaction
+        WHERE tipo = 1
+        GROUP BY MONTH(fecha);");
+        $data = [];
+        foreach ($graficaEgres as $comparacion) {
+            $data['mes'][] = $comparacion->mes;
+            $data['comparacion'][] = $comparacion->total_monto;
+        }
+        $data['data'] = json_encode($data);
+
+        $totalEgresoMes = DB::select("SELECT SUM(monto) AS total_monto
+        FROM transaction
+        WHERE tipo = 0;");
+        $totalIngresoMes = DB::select("SELECT SUM(monto) AS total_monto
+        FROM transaction
+        WHERE tipo = 1;");
+        $transactionMes = DB::select("SELECT COUNT(*) AS total_registros
+        FROM transaction
+        WHERE MONTH(fecha) = MONTH(CURDATE());");
+        $transaction = DB::select("SELECT
+        transaction.id,
+        date(transaction.fecha) AS fecha,
+        transaction.descripcion,
+        transaction.monto,
+        transaction.tipo,
+        transaction.user_id,
+        users.name,
+        users.last_name
+        FROM transaction
+        INNER JOIN users ON transaction.user_id = users.id;");
+        return view('finanzas\crud', $dataP, $data)->with('transaction', $transaction)->with('totalIngresoMes', $totalIngresoMes)->with('totalEgresoMes', $totalEgresoMes)->with('transactionMes', $transactionMes)->with('transaccionTotal',$transaccionTotal);
     }
-    public function CursoCrud(){  
-        $curso=DB::select("SELECT * FROM courses");
-        return view('curso\cursosCrud') ->with('curso',$curso);
+    public function create()
+    {
+        $users = DB::select('select id, name, last_name  from users');
+        return view('finanzas\create')->with('users', $users);
+    }
+    public function destroy($id)
+    {
+        $sqls = DB::delete("DELETE FROM transaction WHERE id = $id");
+        if ($sqls == true) {
+            return redirect()->route('finanzas.index')->with('success', '¡Transacción eliminada exitosamente!');
+        } else {
+            return back()->with('error', 'Falló de la transacción. Intenta nuevamente.');
+        }
+    }
+    public function show($id)
+    {
+        $users = DB::select('select id, name, last_name  from users');
+        $transaction = DB::select("SELECT
+        transaction.id,
+        date(transaction.fecha) AS fecha,
+        transaction.descripcion,
+        transaction.monto,
+        transaction.tipo,
+        transaction.user_id,
+        users.name,
+        users.last_name
+    FROM transaction
+    INNER JOIN users ON transaction.user_id = users.id
+    WHERE transaction.id = $id");
+        return view('finanzas\show')->with('transaction', $transaction)->with('users', $users);
     }
     //Metodo para guardar los cursos en la base de datos
-    public function store(Request $request ){
+    public function store(Request $request)
+    {
+        $sql = DB::insert('INSERT INTO transaction (fecha, descripcion, monto, tipo, user_id ) VALUES(?,?,?,?,?)', [
+            $request->fecha,
+            $request->description,
+            $request->monto,
+            $request->tipo,
+            $request->user_id,
+        ]);
 
-    try {
-        $sql=DB::insert( 'INSERT INTO courses (course_name, teacher_id,start_date,end_date,description, ) values(?,?,?;?)', [$request->NomCurso,$request->id_docente,$request->InCurso,$request->FinCurso,$request->description,]);
-        $cursos=DB::select("SELECT * FROM courses");
-    } catch (\Throwable $th) {
-        //throw $th;
-        $sql=0; 
-    }
-        if ($sql == true){
-            return view('curso\cursosCrud' )-> with ('curso',$cursos);
-        }else {
-            return view('curso\cursosCrud')-> with('curso',$cursos);
-    
+        if ($sql) {  // Comprueba si la inserción fue exitosa
+            return redirect()->route('finanzas.index')->with('success', '¡Transacción creada exitosamente!');
+        } else {
+            return back()->with('error', 'Falló la creación de la transacción. Intenta nuevamente.');
         }
     }
 }

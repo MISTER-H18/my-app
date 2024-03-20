@@ -7,7 +7,7 @@
 
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a wire:navigate href="{{ route('dashboard') }}">
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
                 </div>
@@ -16,36 +16,38 @@
                 @foreach ($collection as $item => $route)
                     @if (!is_array($route))
                         <div class="hidden space-x-4 lg:-my-px lg:ms-6 lg:flex">
-                            <x-nav-link href="{{ route($route) }}" :active="request()->routeIs($route)">
+                            <x-nav-link wire:navigate href="{{ route($route) }}" :active="request()->routeIs($route)">
                                 {{ __($item) }}
                             </x-nav-link>
                         </div>
                     @else
-                        <div class="group p-0 m-0"> {{-- click here--}}
+                        <div class="group p-0 m-0"> {{-- click here --}}
                             <div class="hidden w-full h-full space-x-4 lg:-my-px lg:ms-6 lg:flex">
                                 <x-nav-link>
                                     {{ __($item) }}
-    
-                                    <svg class="ms-2 -me-0.5 h-4 w-4 rotate-0 group-hover:rotate-180 transition-transform" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+
+                                    <svg class="ms-2 -me-0.5 h-4 w-4 rotate-0 group-hover:rotate-180 transition-transform"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round"
                                             d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                     </svg>
                                 </x-nav-link>
                             </div>
-    
-                            <div class="absolute z-50 hidden group-hover:block p-0 m-0 transition-transform"> {{-- display here --}}
-    
+
+                            <div class="absolute z-50 hidden group-hover:block shadow-lg border-orange-500 border-l p-0 m-0 transition-transform">
+                                {{-- display here --}}
+
                                 @foreach ($route as $key => $val)
                                     <div class="block bg-gray-100 p-3">
 
-                                        <x-nav-sublink href="{{ route($val) }}" :active="request()->routeIs($val)">
+                                        <x-nav-sublink wire:navigate href="{{ route($val) }}" :active="request()->routeIs($val)">
                                             {{ __($key) }}
                                         </x-nav-sublink>
-    
+
                                     </div>
                                 @endforeach
-    
+
                             </div>
                         </div>
                     @endif
@@ -81,12 +83,12 @@
                                     </div>
 
                                     <!-- Team Settings -->
-                                    <x-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
+                                    <x-dropdown-link wire:navigate href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
                                         {{ __('Team Settings') }}
                                     </x-dropdown-link>
 
                                     @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                        <x-dropdown-link href="{{ route('teams.create') }}">
+                                        <x-dropdown-link wire:navigate href="{{ route('teams.create') }}">
                                             {{ __('Create New Team') }}
                                         </x-dropdown-link>
                                     @endcan
@@ -150,12 +152,16 @@
                                 {{ __('Manage Account') }}
                             </div>
 
-                            <x-dropdown-link href="{{ route('profile.show') }}">
+                            <x-dropdown-link wire:navigate href="{{ route('profile.show') }}">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
 
+                            <x-dropdown-link wire:navigate href="{{ route('system-settings.show') }}">
+                                {{ __('System Settings') }}
+                            </x-dropdown-link>
+
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                                <x-dropdown-link href="{{ route('api-tokens.index') }}">
+                                <x-dropdown-link wire:navigate href="{{ route('api-tokens.index') }}">
                                     {{ __('API Tokens') }}
                                 </x-dropdown-link>
                             @endif
@@ -166,7 +172,7 @@
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
 
-                                <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                                <x-dropdown-link wire:navigate href="{{ route('logout') }}" @click.prevent="$root.submit();">
                                     {{ __('Log Out') }}
                                 </x-dropdown-link>
                             </form>
@@ -196,13 +202,12 @@
         <div class="pt-2 pb-3 space-y-1">
             @foreach ($collection as $item => $route)
                 @if (!is_array($route))
-                    <x-responsive-nav-link href="{{ route($route) }}" :active="request()->routeIs($route)">
+                    <x-responsive-nav-link wire:navigate href="{{ route($route) }}" :active="request()->routeIs($route)">
                         {{ __($item) }}
                     </x-responsive-nav-link>
                 @else
-                <div class="group"> {{-- click here --}}
-                        <x-responsive-nav-link cla
-                        ss="select-none"> 
+                    <div class="group"> {{-- click here --}}
+                        <x-responsive-nav-link cla ss="select-none">
                             <div class="m-0 mx-auto p-0 flex items-center">
                                 {{ __($item) }}
 
@@ -219,9 +224,9 @@
 
                             <hr class="my-2 border-0 bg-slate-300 h-[1px]">
                             @foreach ($route as $key => $val)
-                                <x-responsive-nav-group href="{{ route($val) }}" :active="request()->routeIs($val)">
+                                <x-responsive-nav-group wire:navigate href="{{ route($val) }}" :active="request()->routeIs($val)">
 
-                                    <x-responsive-nav-sublink href="{{ route($val) }}" :active="request()->routeIs($val)">
+                                    <x-responsive-nav-sublink wire:navigate href="{{ route($val) }}" :active="request()->routeIs($val)">
                                         {{ __($key) }}
                                     </x-responsive-nav-sublink>
 
@@ -253,12 +258,16 @@
 
             <div class="mt-3 space-y-1">
                 <!-- Account Management -->
-                <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
+                <x-responsive-nav-link wire:navigate href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
 
+                <x-responsive-nav-link wire:navigate href="{{ route('system-settings.show') }}" :active="request()->routeIs('system-settings.show')">
+                    {{ __('System Settings') }}
+                </x-responsive-nav-link>
+
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                    <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
+                    <x-responsive-nav-link wire:navigate href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
                         {{ __('API Tokens') }}
                     </x-responsive-nav-link>
                 @endif
@@ -267,7 +276,7 @@
                 <form method="POST" action="{{ route('logout') }}" x-data>
                     @csrf
 
-                    <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
+                    <x-responsive-nav-link wire:navigate href="{{ route('logout') }}" @click.prevent="$root.submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>
@@ -281,13 +290,13 @@
                     </div>
 
                     <!-- Team Settings -->
-                    <x-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
+                    <x-responsive-nav-link wire:navigate href="{{ route('teams.show', Auth::user()->currentTeam->id) }}"
                         :active="request()->routeIs('teams.show')">
                         {{ __('Team Settings') }}
                     </x-responsive-nav-link>
 
                     @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                        <x-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
+                        <x-responsive-nav-link wire:navigate href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
                             {{ __('Create New Team') }}
                         </x-responsive-nav-link>
                     @endcan

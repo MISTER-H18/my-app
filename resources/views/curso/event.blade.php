@@ -3,12 +3,12 @@
 @section('content')
     <div id='calendar' class=""></div>
     <div class="flex items-center py-2 px-4 justify-between px-4">
-        <button
+        <a href="{{ route('event.EventCrud') }}"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"> <i class="fa-solid fa-pen-nib"></i> </button>
-        <button
+            type="submit"> <i class="fa-solid fa-pen-nib"></i> </a>
+        <a href="{{ route('dashboard') }}"
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"><i class="fa-solid fa-door-open"></i></button>
+            type="submit"><i class="fa-solid fa-door-open"></i></a>
     </div>
     <!-- Footer -->
     <footer class="footer-1 bg-gray-100 py-8 sm:py-12 text-center">
@@ -21,14 +21,13 @@
         </div>
     </footer>
 
-    <div class="pccp mt-2" align = "center">
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
-        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2390065838671224" data-ad-slot="1441100372"
-            data-ad-format="auto" data-full-width-responsive="true"></ins>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2390065838671224" data-ad-slot="1441100372"
+        data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
     </div>
 
     </body>

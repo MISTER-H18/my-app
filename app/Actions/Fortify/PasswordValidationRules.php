@@ -17,14 +17,12 @@ trait PasswordValidationRules
             'required',
             'string',
             Password::min(8)
-                // ->letters()
-                // ->mixedCase()
-                // ->numbers()
-                // ->symbols() //add it?
-                ,
+                ->letters()
+                ->mixedCase()
+                ->numbers(),
             'confirmed',
             'confirmed',
-            // 'alpha_dash:ascii',
+            'alpha_dash:ascii',
         ];
     }
 }
