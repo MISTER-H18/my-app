@@ -75,7 +75,7 @@
                                 </th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{{ $nEvent->description }}
                                 </th>
-                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">                                   
                                     <select id="Opciones">
                                         <option value="1">Activo</option>
                                         <option value="0">Inactivo</option>
@@ -96,7 +96,7 @@
                     </tbody>
                 </table>
                 <div class="flex ">
-                    <a href="{{ route('event.event') }}"
+                    <a href="{{ route('event.eventCreate') }}"
                         class="inline-block rounded bg-indigo-600 ml-auto px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700 focus:outline-none focus:shadow-outline">Añadir
                     </a>
                     <div class="p-4"></div>

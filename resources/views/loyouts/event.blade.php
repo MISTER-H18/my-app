@@ -17,34 +17,41 @@
 
     <!-- Styles -->
 </head>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Members') }}
+        </h2>
+    </x-slot>
+    <body class="font-sans antialiased">
 
-<body class="font-sans antialiased">
-    <x-banner />
+        
+        <div class="min-h-screen bg-gray-100">
 
-    <div class="min-h-screen bg-gray-100">
-        <x-navigation-menu />
-
-        <!-- Page Heading -->
-        @if (isset($header))
+            
+            <!-- Page Heading -->
+            @if (isset($header))
             <header class="bg-white shadow">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
             </header>
-        @endif
-
-        <!-- Page Content -->
-        <div class="container ml-auto mr-auto flex items-center justify-center">
-            <div class="md:w-1/2">
-                <div>@yield('content')</div>
-
+            @endif
+            
+            <!-- Page Content -->
+            <div class="container ml-auto mr-auto flex items-center justify-center">
+                <div class="md:w-1/2">
+                    <div>@yield('content')</div>
+                    
+                </div>
             </div>
         </div>
-    </div>
-
-    @stack('modals')
-    @stack('scripts')
-
-</body>
-
-</html>
+        
+        @stack('modals')
+        @stack('scripts')
+        
+    </body>
+    
+    </html>
+    
+</x-app-layout>

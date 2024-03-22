@@ -3,11 +3,42 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class finanzaController extends Controller
 {
+    public function pdf()
+    {
+        $transaccionTotal = DB::select("SELECT
+        SUM(CASE tipo
+          WHEN 1 THEN monto
+          ELSE -monto
+        END) AS total_monto
+      FROM transaction
+      WHERE MONTH(fecha) = MONTH(CURDATE());");
+        $totalEgresoMes = DB::select("SELECT SUM(monto) AS total_monto
+        FROM transaction
+        WHERE tipo = 0;");
+        $totalIngresoMes = DB::select("SELECT SUM(monto) AS total_monto
+        FROM transaction
+        WHERE tipo = 1;");
+        $transactionMes = DB::select("SELECT
+        transaction.id,
+        date(transaction.fecha) AS fecha,
+        transaction.descripcion,
+        transaction.monto,
+        transaction.tipo,
+        transaction.user_id,
+        users.name,
+        users.last_name
+        FROM transaction  
+        INNER JOIN users ON transaction.user_id = users.id
+        WHERE MONTH(fecha) = MONTH(CURDATE());");
+        $pdf = Pdf::loadView('finanzas.pdf', compact('transactionMes'), compact('transaccionTotal'));
+        return $pdf->stream();
+    }
     public function update(Request $request)
     {
         try {
@@ -57,13 +88,11 @@ class finanzaController extends Controller
             $data['comparacion'][] = $comparacion->total_monto;
         }
         $data['data'] = json_encode($data);
-
-        $totalEgresoMes = DB::select("SELECT SUM(monto) AS total_monto
+        $totalEgresoMes = DB::select("SELECT SUM(COALESCE(monto, 0)) AS total_monto
         FROM transaction
-        WHERE tipo = 0;");
-        $totalIngresoMes = DB::select("SELECT SUM(monto) AS total_monto
-        FROM transaction
-        WHERE tipo = 1;");
+        WHERE tipo = 0 and
+ MONTH(fecha) = MONTH(CURDATE());");
+        $totalIngresoMes = DB::select("SELECT SUM(COALESCE(monto, 0)) AS total_monto FROM transaction WHERE tipo = 1 AND MONTH(fecha) = MONTH(CURDATE());");
         $transactionMes = DB::select("SELECT COUNT(*) AS total_registros
         FROM transaction
         WHERE MONTH(fecha) = MONTH(CURDATE());");
@@ -78,7 +107,7 @@ class finanzaController extends Controller
         users.last_name
         FROM transaction
         INNER JOIN users ON transaction.user_id = users.id;");
-        return view('finanzas\crud', $dataP, $data)->with('transaction', $transaction)->with('totalIngresoMes', $totalIngresoMes)->with('totalEgresoMes', $totalEgresoMes)->with('transactionMes', $transactionMes)->with('transaccionTotal',$transaccionTotal);
+        return view('finanzas\crud', $dataP, $data)->with('transaction', $transaction)->with('totalIngresoMes', $totalIngresoMes)->with('totalEgresoMes', $totalEgresoMes)->with('transactionMes', $transactionMes)->with('transaccionTotal', $transaccionTotal);
     }
     public function create()
     {

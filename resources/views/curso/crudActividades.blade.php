@@ -1,7 +1,7 @@
 @extends('loyouts.crud')
 
 @section('content')
-    <div class="container mx-auto px-5">
+    <div class="container mx-auto px-10">
         <form method="GET" action="" accept-charset="UTF-8">
             <div class="flex md:flex-row flex-col justify-between">
                 <div class="flex flex-row items-center justify-start my-4 mx-2">
@@ -56,14 +56,13 @@
                 <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                     <thead class="ltr:text-left rtl:text-right">
                         <tr class="bg-blue-500">
-                            <th class="whitespace-nowrap px-4 py-2 font-medium text-white">Curso</th>
-                            <th class="whitespace-nowrap px-4 py-2 font-medium text-white">Profesor</th>
+                            <th class="whitespace-nowrap px-4 py-2 font-medium text-white">Actividades </th>
                             <th class="whitespace-nowrap px-4 py-2 font-medium text-white">Descripción</th>
-                            <th class="whitespace-nowrap px-4 py-2 font-medium text-white">F. Inicio</th>
-                            <th class="whitespace-nowrap px-4 py-2 font-medium text-white">F. Culminacion</th>
                             <th class="whitespace-nowrap px-4 py-2 font-medium text-white">Estado</th>
                             <th class="whitespace-nowrap px-4 py-2 font-medium text-white"></th>
-                            <th class="whitespace-nowrap px-4 py-2 font-medium text-white"></th>
+
+
+
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 ">
@@ -72,56 +71,45 @@
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                     <a class="group relative inline-block focus:outline-none focus:ring" href="#">
                                         <div class="bg-gradient-to-r from-blue-600 via-indigo-500 to-blue-700">
-                                            <span class="absolute py-24 transition-transform "></span>
                                             <span
-                                                class="relative text-white inline-block border-2 border-current px-8 py-3 text-sm font-bold uppercase tracking-widest">
-                                                {{ $nCurso->course_name }}
-                                            </span>
-                                        </div>
+                                            class="absolute "></span>
+                                            <span
+                                            class="relative inline-block text-white border-2 border-current px-8 py-3 text-sm font-bold uppercase tracking-widest">
+                                            {{ $nCurso->task }}
+                                        </span>
+                                    </div>
                                     </a>
-                                </th>
-                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{{ $nCurso->name }}
-                                    {{ $nCurso->last_name }}
                                 </th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                     {{ $nCurso->description }}
                                 </th>
-                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{{ $nCurso->start_date }}
+                                <form action="{{route('curso.updateEstadoActividad') }}" method="POST">
+                                @csrf
+                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                    <input hidden type="hidden" value="{{$nCurso->id}}" name="id"/>
+                                    <select
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    name="tipo" required>
+                                    @if ($nCurso->estado == 1)
+                                        <option value="1">Activo</option>
+                                        <option value="0">Inactivo</option>
+                                    @else
+                                        <option value="0">Inactivo</option>
+                                        <option value="1">Activo</option>
+                                    @endif
+                                </select>
                                 </th>
-                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{{ $nCurso->end_date }}
-                                </th>
-                                <form action="{{route('curso.updateEstado') }}" method="POST">
-                                    @csrf
-                                    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                                        <input hidden type="hidden" value="{{$nCurso->id}}" name="id"/>
-                                        <select name="estado" >
-                                            @if ($nCurso->estado == 1)
-                                                <option value="1">Activo</option>
-                                                <option value="0">Inactivo</option>
-                                            @else
-                                                <option value="0">Inactivo</option>
-                                                <option value="1">Activo</option>
-                                            @endif
-                                        </select>
-                                    </th>
-                                    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                                        <button
-                                            class="inline-block rounded bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700"
-                                            type="submit"><i class="fa-regular fa-floppy-disk"></i></button>
-
+                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                    <button class="inline-block rounded bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700" type="submit" ><i class="fa-regular fa-floppy-disk"></i></button>
                                 </form>
-                                <a href="http://127.0.0.1:8000/curso/Editar/{{ $nCurso->id }}"
-                                    class="inline-block rounded bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700">
-                                    <i class="fa-solid fa-pen-nib"></i>
-                                </a>
-                                <a href="http://127.0.0.1:8000/curso/Eliminar/{{ $nCurso->id }}"
-                                    class="inline-block rounded bg-indigo-600 px-4 py-2 font-medium hover:bg-indigo-700">
-                                    <i class="fa-solid fa-eraser"></i>
-                                </a>
-                                <a href="http://127.0.0.1:8000/curso/actividades/crud/{{ $nCurso->id }}"
-                                    class="inline-block text-white rounded bg-indigo-600 px-4 py-2 font-medium hover:bg-indigo-700">
-                                    +
-                                </a>
+                                    <a href="http://127.0.0.1:8000/curso/actividades/crud/update/{{ $nCurso->id }}"
+                                        class="inline-block rounded bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700">
+                                        <i class="fa-solid fa-pen-nib"></i>
+                                    </a>
+                                    <a href="http://127.0.0.1:8000/curso/actividades/crud/destroy/{{ $nCurso->id }}"
+                                        class="inline-block rounded bg-indigo-600 px-4 py-2 font-medium hover:bg-indigo-700">
+                                        <i class="fa-solid fa-eraser"></i>
+                                    </a>
                                 </th>
                             </tr>
                         @endforeach
@@ -129,8 +117,9 @@
                 </table>
             </div>
         </div>
-        <div class="flex p-4 ">
-            <a href="{{ route('curso.create') }}"
+
+        <div class="flex p-4">
+            <a href="http://127.0.0.1:8000/curso/actividades/crud/create/{{$id}}"
                 class="inline-block rounded bg-indigo-600 ml-auto px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700 focus:outline-none focus:shadow-outline">Añadir
             </a>
             <div class="p-4"></div>

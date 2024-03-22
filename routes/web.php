@@ -54,13 +54,13 @@ Route::middleware([
         //Eliminar cursos
         Route::get('event/Eliminar/{id}', 'destroy')->name('event.destroy');
         Route::get('estadisticas', 'statistics')->name('user.estadistica');
-        
+        Route::get('estadisticas/pdf', 'pdf')->name('user.pdf');        
     });
-    //
+    // 
 
     Route::controller(finanzaController::class)->group(function () {
         Route::get('finanzas', 'index')->name('finanzas.index');
-
+        Route::get('finanzas/pdf', 'pdf')->name('finanzas.pdf');
         Route::get('finanza/create', 'create')->name('finanza.create');
 
         Route::get('finanza/Eliminar/{id}', 'destroy')->name('finanza.destroy');
@@ -79,23 +79,23 @@ Route::middleware([
     //Rutas para modulo de cursos
     Route::controller(CursoController::class)->group(function () {
         Route::get('curso', 'index')->name('curso.index');
-
-        Route::get('curso/crud', 'cursoCrud')->name('curso.cursoCrud');
-        
+        Route::get('curso/crud', 'cursoCrud')->name('curso.cursoCrud');        
         Route::get('curso/create', 'create')->name('curso.create');
         Route::post('curso/update', 'update')->name('curso.update');
-
         Route::get('curso/Eliminar/{id}', 'destroy')->name('curso.destroy');
-
         Route::get('curso/Editar/{id}', 'show')->name('curso.show');
-
-        //Enviar el formulario de edición a la base de datos
-
-
-        //Crear un curso en la base de datos
         Route::post('curso', 'store')->name('curso.store');
+        //Actividades
+        Route::get('curso/actividades/{id}', 'buscar')->name('curso.buscarA');       
+        Route::get('curso/actividades/crud/create/{id}', 'createA')->name('curso.createActividad');
+        Route::get('curso/actividades/crud/destroy/{id}', 'destroyA')->name('curso.destroyActividad');
+        Route::get('curso/actividades/crud/update/{id}', 'showA')->name('curso.showA');
+        Route::post('curso/actividades/crud/create', 'storeA')->name('curso.storeActividad');
+        Route::post('curso/actividades/crud/update', 'updateA')->name('curso.updateActividad');
+        Route::post('curso/actividades/estado/update', 'updateEstadoActividad')->name('curso.updateEstadoActividad');
+        Route::post('curso/estado/update', 'updateEstado')->name('curso.updateEstado');
+        Route::get('curso/actividades/crud/{id}', 'actividadesCrud')->name('curso.actividadesCrud');       
 
-        //Eliminar un curso de la base de datos
     });
 
 });

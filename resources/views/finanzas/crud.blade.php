@@ -42,15 +42,18 @@
                                     <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                                 </svg>
                             </div>
-                            <h2 class="text-gray-900 text-lg title-font font-medium">Total Egreso en el mes</h2>
+                            <h2 class="text-gray-900 text-lg title-font font-medium">Total Ingreso en el mes</h2>
                         </div>
                         <div class="hidden sm:block sm:shrink-0">
                         </div>
                     </div>
                     @foreach ($totalIngresoMes as $tIngreso)
                         <div class="flex-grow">
-                            <p class="text-2xl font-medium text-gray-900">{{ $tIngreso->total_monto }} Bs.
-                            </p>
+                            @if ($tIngreso->total_monto !== null)
+                            <p class="text-2xl font-medium text-gray-900">{{ $tIngreso->total_monto }} Bs.</p>
+                                @else  
+                                <p class="text-2xl font-medium text-gray-900">0 Bs.</p>
+                            @endif
                         </div>
                     @endforeach
                 </div>
@@ -69,21 +72,25 @@
                                     <path d="M20 4L8.12 15.88M14.47 14.48L20 20M8.12 8.12L12 12"></path>
                                 </svg>
                             </div>
-                            <h2 class="text-gray-900 text-lg title-font font-medium">Total de Ingreso en el mes</h2>
+                            <h2 class="text-gray-900 text-lg title-font font-medium">Total de Egreso en el mes</h2>
                         </div>
                         <div class="hidden sm:block sm:shrink-0">
                         </div>
                     </div>
                     @foreach ($totalEgresoMes as $egresoT)
                         <div class="flex-grow justify-center">
-                            <p class="text-2xl font-medium text-gray-900">{{ $egresoT->total_monto }} Bs.
+                            @if ($egresoT->total_monto !== null)
+                            <p class="text-2xl font-medium text-gray-900">{{$egresoT->total_monto }} Bs.
+                                @else
+                                <p class="text-2xl font-medium text-gray-900">0 Bs.   
                             </p>
+                            @endif
                         </div>
                     @endforeach
                 </div>
-
             </div>
         </div>
+
         <form method="GET" action="" accept-charset="UTF-8">
             <div class="flex md:flex-row flex-col justify-between">
                 <div class="flex flex-row items-center justify-start my-4 mx-2">
@@ -93,7 +100,7 @@
 
                     <select
                         class="block mt-1 w-full border-sky-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
-                        name="perPage" value="{{ request('perPage') }}" autofocus> 
+                        name="perPage" value="{{ request('perPage') }}" autofocus>
                         <x-option name="perPage" value="5">5</x-option>
                         <x-option name="perPage" value="10">10</x-option>
                         <x-option name="perPage" value="15">15</x-option>
@@ -140,7 +147,8 @@
                         <tr class="bg-blue-500 ">
                             <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white">Fecha</th>
                             <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white">Monto</th>
-                            <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white">Descripcion</th>
+                            <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white">Descripcion
+                            </th>
                             <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white">Tipo</th>
                             <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white">Por</th>
                             <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white"></th>
@@ -149,7 +157,8 @@
                     <tbody class="divide-y divide-gray-200 ">
                         @foreach ($transaction as $nTransaction)
                             <tr class="hover:bg-gray-200 cursor-pointer">
-                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{{ $nTransaction->fecha }}
+                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                    {{ $nTransaction->fecha }}
                                 </th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                     {{ $nTransaction->monto }} Bs.</th>
@@ -162,14 +171,15 @@
                                         <span
                                             class="block rounded-full bg-white px-8 py-3 text-sm font-medium group-hover:bg-transparent">
                                             @if ($nTransaction->tipo == 1)
-                                                Egreso
-                                            @else
                                                 Ingreso
+                                            @else
+                                                Egreso
                                             @endif
                                         </span>
                                     </div>
                                 </th>
-                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{{ $nTransaction->name }}
+                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                    {{ $nTransaction->name }}
                                     {{ $nTransaction->last_name }}
                                 </th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
@@ -186,8 +196,9 @@
                         @endforeach
                         <tr class="bg-blue-500">
                             <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white">Total</th>
-                            @foreach ($transaccionTotal as  $tTotales)
-                            <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white">{{$tTotales->total_monto}} Bs.</th>
+                            @foreach ($transaccionTotal as $tTotales)
+                                <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white">
+                                    {{ $tTotales->total_monto }} Bs.</th>
                             @endforeach
                             <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white"></th>
                             <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white"></th>
@@ -197,6 +208,10 @@
                     </tbody>
                 </table>
                 <div class="flex p-4">
+                    <a href="{{ route('finanzas.pdf') }}"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        <i class="">Reporte mensual</i>
+                    </a>
                     <a href="{{ route('finanza.create') }}"
                         class="inline-block rounded bg-indigo-600 ml-auto px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700 focus:outline-none focus:shadow-outline">Añadir
                     </a>
@@ -245,10 +260,10 @@
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: cDataA.mes,
+                labels: cDataB.mes,
                 datasets: [{
                     label: 'Monto(Bs.)',
-                    data: cDataA.comparacion,
+                    data: cDataB.comparacion,
                     borderWidth: 1
                 }]
             },
@@ -268,10 +283,10 @@
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: cDataB.mes,
+                labels: cDataA.mes,
                 datasets: [{
                     label: 'Monto(Bs.)',
-                    data: cDataB.comparacion,
+                    data: cDataA.comparacion,
                     borderWidth: 1
                 }]
             },

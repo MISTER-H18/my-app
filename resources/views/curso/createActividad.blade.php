@@ -1,4 +1,4 @@
-@extends('loyouts.createEvent')
+@extends('loyouts.createCurso')
 @section('title', 'Inicio')
 @section('content')
     <title>Mi Proyecto</title>
@@ -18,76 +18,64 @@
 
             <!-- Menú -->
 
+
             <main>
                 <div class="container ml-auto mr-auto flex flex-wrap items-start mt-8">
 
                     <div class="w-full pl-2 pr-2 mb-4 mt-4">
-                        <h1 class="text-3xl font-extrabold text-center"> Movimiento </h1>
+                        <h1 class="text-3xl font-extrabold text-center"> Nuevo material </h1>
                     </div>
+
                 </div>
+
                 <div class="container ml-auto mr-auto flex items-center justify-center">
                     <div class="w-full md:w-1/2">
+
                         <!-- Formulario -->
-                        <form action="{{ route('finanza.store') }}" method="POST" class="bg-white px-8 pt-6 pb-8 mb-4">
+                        <form action="{{ route('curso.storeActividad') }}" method="POST" class="bg-white px-8 pt-6 pb-8 mb-4"
+                            enctype="multipart/form-data">
                             @csrf
+                            <!-- Nombre del curso -->
                             <div class="mb-4">
                                 <div class="grid grid-flow-row sm:grid-flow-col gap-3">
                                     <div class="sm:col-span-4 justify-center">
-                                        <label class="block text-gray-700 text-sm font-bold mb-2" for="nya">
-                                            Monto</label>
+                                        <label class="block text-gray-700 text-sm font-bold mb-2" for="nya"> Nombre del
+                                            material </label>
                                         <input
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="nya" inputmode="numeric" pattern="^([0-9]{1,10})(.[0-9]{1,2})?$"
-                                            name="monto" type="number" required>
-                                    </div>
-                                    <div class="sm:col-span-4 justify-center">
-                                        <label class="block text-gray-700 text-sm font-bold mb-2" for="email"> Fecha de
-                                            registro
-                                        </label>
-                                        <input
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            name="fecha" type="date" required>
+                                            id="nya" type="text" placeholder="Ejm Oratoria" inputmode="text"
+                                            name="NomCurso" minlength="5" maxlength="20" required>
                                     </div>
                                 </div>
                             </div>
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="email"> Tipo
-                            </label>
-                            <select
+                            <input
                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                name="tipo" required>
-                                <option value="1">Ingreso</option>
-                                <option value="0">Egreso</option>
-                            </select>
-                            <label class="block text-gray-700 text-sm font-bold mb-2" for="email"> Usuario
-                            </label>
-                            <select
-                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                name="user_id" required>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->id }}"> {{ $user->name }} {{ $user->last_name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                                type="hidden" value="{{ $id }}" name="course_id" hidden required>
+                            <div class="sm:col-span-4 justify-center">
+                                <label class="block text-gray-700 text-sm font-bold mb-2" for="featured"> Archivo </label>
+                                <input
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="featured" type="file" name="featured" accept=".pdf,.docx,.doc" required>
+                            </div>
                             <div class="mb-4">
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="mensaje"> Descripción
                                 </label>
-                                <input
+                                <textarea
                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    id="mensaje" rows="5" inputmode="text" pattern="^([a-zA-Z0-9_\-\. ]{1,255})$"
-                                    name="description" placeholder="El mensaje" required>
+                                    name="description" id="mensaje" rows="5" placeholder="El mensaje" inputmode="text"
+                                    pattern="^([a-zA-Z0-9_\-\. ]{1,255})$" minlength="10" maxlength="196" required></textarea>
                             </div>
                             <div class="flex items-center justify-between">
                                 <button
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                                    type="submit"> Aceptar
-                                </button>
-
-                                <a href="{{ route('finanzas.index') }}"
+                                    type="submit"> Aceptar </button>
+                                <a href="{{ route('curso.cursoCrud') }}"
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                    <i class="">Salir</i>
+                                    <i class="fa-solid fa-door-open"></i>
                                 </a>
                             </div>
                         </form>
+
                     </div>
 
                 </div>
@@ -95,18 +83,6 @@
             </main>
 
         </div>
-
-
-        <!-- Footer -->
-        <footer class="footer-1 bg-gray-100 py-8 sm:py-12 text-center">
-            <div class="container mx-auto">
-                <p>©Mi Proyecto
-                    <script>
-                        document.write(new Date().getFullYear())
-                    </script>. Todos los derechos reservados.
-                </p>
-            </div>
-        </footer>
 
         <div class="pccp mt-2" align="center">
 
@@ -140,5 +116,6 @@
         </div>
 
     </body>
+    <script src="https://kit.fontawesome.com/bf1e73e2b4.js" crossorigin="anonymous"></script>
 
 @endsection

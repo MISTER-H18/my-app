@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -80,6 +81,11 @@ class eventController extends Controller
         } else {
             return redirect()->route('event.EventCrud')->with('error', 'Falló. Intenta nuevamente.');
         }
+    }
+    public function pdf()
+    {
+        $pdf = Pdf::loadView('user.pdf');
+        return $pdf->stream();
     }
     public function statistics()
     {

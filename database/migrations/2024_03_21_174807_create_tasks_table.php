@@ -11,22 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->integer('id', true);
-            $table->string('event');
-            $table->datetime('start_date');
-            $table->datetime('end_date');
-            $table->timestamps();
-            $table->string('description');
+            $table->integer('course_id')->index('course_id');
+            $table->string('task', 45)->nullable();
+            $table->text('description')->nullable();
+            $table->string( 'ruta' , 100 );
             $table->boolean('estado')->nullable();
+ 
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('tasks');
     }
 };
+
