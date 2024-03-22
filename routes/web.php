@@ -50,8 +50,10 @@ Route::middleware([
         Route::post('event/store', 'Store')->name('event.store');
         //Mostrar informacion del curso por ID
         Route::get('event/Editar/{id}', 'show')->name('event.show');
+        Route::get('event/pdf', 'pdfEvent')->name('event.pdf');
         //Editar un curso por su id
         //Eliminar cursos
+        Route::post('event/estado/update', 'updateEvent')->name('event.updateEvent');
         Route::get('event/Eliminar/{id}', 'destroy')->name('event.destroy');
         Route::get('estadisticas', 'statistics')->name('user.estadistica');
         Route::get('estadisticas/pdf', 'pdf')->name('user.pdf');        

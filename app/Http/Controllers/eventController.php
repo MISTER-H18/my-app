@@ -7,9 +7,11 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function Laravel\Prompts\select;
+
 class eventController extends Controller
 {
-    //
+    //--------------------------------------------------------------------------------------//
     public function event()
     {
         $all_events = Event::all();
@@ -24,15 +26,19 @@ class eventController extends Controller
 
         return view('curso\event', compact('events'));
     }
+    //--------------------------------------------------------------------------------------//
     public function EventCrud()
     {
-        $event = DB::select("SELECT id,event, date(start_date) as start_date,date(end_date) as end_date,description FROM events");
+        $event = DB::select("SELECT events.estado,events.id, event, date(start_date) as start_date, date(end_date) as end_date, description, users.name AS encargado_name, users.last_name AS Snombre FROM events INNER JOIN users ON users.id = events.encargado_id;");
         return view('event\eventCrud')->with('event', $event);
     }
+    //--------------------------------------------------------------------------------------//
     public function create()
-    {
-        return view('event\createEvent');
+    {   
+        $docentes = DB::select("select name, last_name, users.id from users;");
+        return view('event\createEvent')->with('docentes',$docentes);
     }
+    //--------------------------------------------------------------------------------------//
     public function update(Request $request)
     {
         try {
@@ -53,11 +59,12 @@ class eventController extends Controller
             return redirect()->route('event.EventCrud')->with('error', 'Falló. Intenta nuevamente.');
         }
     }
+    //--------------------------------------------------------------------------------------//
     public function store(Request $request)
     {
 
         try {
-            $sql = DB::insert('INSERT INTO events (event, start_date,end_date,description) values(?,?,?,?)', [$request->name_event, $request->start_date, $request->end_date, $request->description,]);
+            $sql = DB::insert('INSERT INTO events (event, start_date,end_date,description,encargado_id) values(?,?,?,?,?)', [$request->name_event, $request->start_date, $request->end_date, $request->description,$request->id_docente]);
         } catch (\Throwable $th) {
             //throw $th;
             $sql = 0;
@@ -68,10 +75,11 @@ class eventController extends Controller
             return redirect()->route('event.EventCrud')->with('error', 'Falló. Intenta nuevamente.');
         }
     }
+    //--------------------------------------------------------------------------------------//
     public function show($id)
-    {
-        $event = DB::select("SELECT id ,event, date(start_date) as start_date,date(end_date) as end_date,description FROM events WHERE id = $id");
-        return view('event\show')->with('event', $event);
+    {   $encargado =DB ::select("select name, last_name, id from users;");
+        $event = DB::select("SELECT id ,event, date(start_date) as start_date,date(end_date) as end_date,description, encargado_id FROM events WHERE id = $id");
+        return view('event\show')->with('event', $event)->with('encargado',$encargado);
     }
     public function destroy($id)
     {
@@ -84,8 +92,15 @@ class eventController extends Controller
     }
     public function pdf()
     {
-        $pdf = Pdf::loadView('user.pdf');
+        $events = DB::select("");
+        $pdf = Pdf::loadView('members.pdf');
         return $pdf->stream();
+    }
+    public function pdfEvent()
+    {
+        $events = DB::select("SELECT events.estado,events.id, event, date(start_date) as start_date, date(end_date) as end_date, description, users.name AS encargado_name, users.last_name AS Snombre FROM events INNER JOIN users ON users.id = events.encargado_id WHERE estado = 1;");
+        $pdf = Pdf::loadView('event.pdf',compact('events'));
+        return $pdf->stream(); 
     }
     public function statistics()
     {
@@ -115,6 +130,23 @@ class eventController extends Controller
         }
         $edades['edades'] = json_encode($edades);
         return view("members.estadisticas", $edades, $profesiones)->with($dataP);
+    }
+    public function updateEvent(Request $request)
+    {
+        try {
+            $sql = DB::update("UPDATE events SET estado=? WHERE id=? ", [
+                $request->estado,
+                $request->id,
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            $sql = 0;
+        }
+        if ($sql == true) {
+            return redirect()->route('event.EventCrud')->with('success', '¡Evento modificado exitosamente!');
+        } else {
+            return redirect()->route('event.EventCrud')->with('error', 'Falló. Intenta nuevamente.');
+        }
     }
 }
 

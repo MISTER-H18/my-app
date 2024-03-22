@@ -11,7 +11,7 @@
 
                     <select
                         class="block mt-1 w-full border-sky-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
-                        name="perPage" value="{{ request('perPage') }}" autofocus> 
+                        name="perPage" value="{{ request('perPage') }}" autofocus>
                         <x-option name="perPage" value="5">5</x-option>
                         <x-option name="perPage" value="10">10</x-option>
                         <x-option name="perPage" value="15">15</x-option>
@@ -60,6 +60,7 @@
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-white">Fecha de inicio</th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-white">Fecha de culminacion</th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-white">Descripción</th>
+                                <th class="whitespace-nowrap px-4 py-2 font-medium text-white">Encargado</th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-white">Estado</th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-white"></th>
                             </p>
@@ -75,27 +76,48 @@
                                 </th>
                                 <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{{ $nEvent->description }}
                                 </th>
-                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">                                   
-                                    <select id="Opciones">
-                                        <option value="1">Activo</option>
-                                        <option value="0">Inactivo</option>
-                                    </select>
+                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{{ $nEvent->encargado_name}} {{ $nEvent->Snombre}}
                                 </th>
-                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                                    <a href="http://127.0.0.1:8000/event/Editar/{{ $nEvent->id }}"
-                                        class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
-                                        <i class="fa-solid fa-pen-nib"></i>
-                                    </a>
-                                    <a href="http://127.0.0.1:8000/event/Eliminar/{{ $nEvent->id }}"
-                                        class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium hover:bg-indigo-700">
-                                        <i class="fa-solid fa-eraser"></i>
-                                    </a>
-                                </th>
-                            </tr>
+                                <form action="{{ route('event.updateEvent') }}" method="POST">
+                                    @csrf
+                                    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                        <input hidden type="hidden" value="{{ $nEvent->id }}" name="id" />
+                                        <select
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            name="estado" required>
+                                            @if ($nEvent->estado == 1)
+                                                <option value="1">Activo</option>
+                                                <option value="0">Inactivo</option>
+                                            @else
+                                                <option value="0">Inactivo</option>
+                                                <option value="1">Activo</option>
+                                            @endif
+                                        </select>
+                                    </th>
+                                    <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                        <button
+                                            class="inline-block rounded bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700"
+                                            type="submit"><i class="fa-regular fa-floppy-disk"></i></button>
+                                </form>
+                                <a href="http://127.0.0.1:8000/event/Editar/{{ $nEvent->id }}"
+                                    class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700">
+                                    <i class="fa-solid fa-pen-nib"></i>
+                                </a>
+                                <a href="http://127.0.0.1:8000/event/Eliminar/{{ $nEvent->id }}"
+                                    class="inline-block rounded bg-indigo-600 px-4 py-2 text-xs font-medium hover:bg-indigo-700">
+                                    <i class="fa-solid fa-eraser"></i>
+                                </a>
+                            </th>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
                 <div class="flex ">
+                    <div class="px-4">Eventos proximos</div>
+                    <a href="{{ route('event.pdf') }}"
+                        class="inline-block rounded bg-indigo-600 p-4 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700 focus:outline-none focus:shadow-outline">
+                        <i class="">Imprimir </i>
+                    </a>
                     <a href="{{ route('event.eventCreate') }}"
                         class="inline-block rounded bg-indigo-600 ml-auto px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700 focus:outline-none focus:shadow-outline">Añadir
                     </a>

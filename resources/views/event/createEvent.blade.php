@@ -69,6 +69,17 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="sm:col-span-4 justify-center">
+                                <label class="block text-gray-700 text-sm font-bold mb-2"> Encargado </label>
+                                <select
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="NomDocente" placeholder="Encargado Curso" name="id_docente" required>
+                                    <option>...</option>
+                                    @foreach ($docentes as $item)
+                                        <option value={{ $item->id }}>{{ $item->name }} {{ $item->last_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             <div class="mb-4">
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="mensaje"> Descripción
                                 </label>

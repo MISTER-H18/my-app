@@ -46,7 +46,7 @@
                                             name="NomCurso" minlength="5" maxlength="20" required>
                                     </div>
                                     <div class="sm:col-span-4 justify-center">
-                                        <label class="block text-gray-700 text-sm font-bold mb-2"> Docente </label>
+                                        <label class="block text-gray-700 text-sm font-bold mb-2"> Docente </label> 
                                         <select
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                             id="NomDocente" placeholder="Encargado Curso" name="id_docente" required>

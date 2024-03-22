@@ -66,7 +66,7 @@ class CursoController extends Controller
                     //throw $th;
                     $sql = 0;
                 }
-                if ($sql == true) {
+                if ($sql == true) { 
                     return redirect()->route('curso.cursoCrud')->with('success', '¡Curso modificado exitosamente!');
                 } else {
                     return redirect()->route('curso.cursoCrud')->with('error', 'Falló. Intenta nuevamente.');
@@ -143,7 +143,6 @@ class CursoController extends Controller
     {
         $docentes = DB::select("select name, last_name, users.id from users INNER JOIN user_roles ON user_roles.id = users.user_rol_id WHERE user_roles.rol_name = 'Docente';");
         $curso = DB::select("SELECT courses.id, course_name, teacher_id, date(start_date)as start_date, date(end_date)as end_date, description, image FROM courses WHERE id = $id ");
-        $id = $id;
         return view('curso\show',)->with('curso', $curso)->with('docentes', $docentes);
     }
     //---------------------------------------------------------------------------------------//
@@ -228,6 +227,7 @@ class CursoController extends Controller
             return redirect()->route('curso.cursoCrud')->with('error', 'Falló. Intenta nuevamente.');
         }
     }
+    //--------------------------------------------------------------------------------------//
     public function updateEstadoActividad(Request $request)
     {
         try {

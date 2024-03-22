@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string( 'ruta' , 100 );
             $table->boolean('estado')->nullable();
- 
+
         });
     }
 
