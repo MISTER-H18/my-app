@@ -81,6 +81,7 @@ class eventController extends Controller
         $event = DB::select("SELECT id ,event, date(start_date) as start_date,date(end_date) as end_date,description, encargado_id FROM events WHERE id = $id");
         return view('event\show')->with('event', $event)->with('encargado',$encargado);
     }
+     //--------------------------------------------------------------------------------------//
     public function destroy($id)
     {
         $sqls = DB::delete("DELETE FROM events WHERE id = $id");
@@ -90,18 +91,21 @@ class eventController extends Controller
             return redirect()->route('event.EventCrud')->with('error', 'Falló. Intenta nuevamente.');
         }
     }
-    public function pdf()
+     //--------------------------------------------------------------------------------------//
+    public function pdf($id)
     {
-        $events = DB::select("");
-        $pdf = Pdf::loadView('members.pdf');
+        $users = DB::select("SELECT name, last_name, identity_card,date_of_birth,address,sex, phone_number, address, occupation, email  from users where id = $id");
+        $pdf = Pdf::loadView('members.pdf',compact( 'users'));
         return $pdf->stream();
     }
+     //--------------------------------------------------------------------------------------//
     public function pdfEvent()
     {
         $events = DB::select("SELECT events.estado,events.id, event, date(start_date) as start_date, date(end_date) as end_date, description, users.name AS encargado_name, users.last_name AS Snombre FROM events INNER JOIN users ON users.id = events.encargado_id WHERE estado = 1;");
         $pdf = Pdf::loadView('event.pdf',compact('events'));
         return $pdf->stream(); 
     }
+     //--------------------------------------------------------------------------------------//
     public function statistics()
     {
         $dataProfesiones = DB::select("SELECT rol_name AS profesion FROM user_roles WHERE rol_name <> 'Admin';");
@@ -131,6 +135,7 @@ class eventController extends Controller
         $edades['edades'] = json_encode($edades);
         return view("members.estadisticas", $edades, $profesiones)->with($dataP);
     }
+     //--------------------------------------------------------------------------------------//
     public function updateEvent(Request $request)
     {
         try {

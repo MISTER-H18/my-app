@@ -36,6 +36,7 @@
                 </div>
             </div>
         </form>
+        
 
         <div class="overflow-x-auto">
             <div class="container mx-auto ">
@@ -123,6 +124,7 @@
                                     +
                                 </a>
                                 </th>
+                                
                             </tr>
                         @endforeach
                     </tbody>

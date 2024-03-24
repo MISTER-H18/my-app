@@ -56,7 +56,7 @@ Route::middleware([
         Route::post('event/estado/update', 'updateEvent')->name('event.updateEvent');
         Route::get('event/Eliminar/{id}', 'destroy')->name('event.destroy');
         Route::get('estadisticas', 'statistics')->name('user.estadistica');
-        Route::get('estadisticas/pdf', 'pdf')->name('user.pdf');        
+        Route::get('estadisticas/pdf/{id}', 'pdf')->name('user.pdf');        
     });
     // 
 

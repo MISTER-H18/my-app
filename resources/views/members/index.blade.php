@@ -29,7 +29,7 @@
 
                             <select
                                 class="block mt-1 w-full border-sky-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
-                                name="perPage" value="{{ request('perPage') }}" autofocus> 
+                                name="perPage" value="{{ request('perPage') }}" autofocus>
                                 <x-option name="perPage" value="5">5</x-option>
                                 <x-option name="perPage" value="10">10</x-option>
                                 <x-option name="perPage" value="15">15</x-option>
@@ -110,6 +110,12 @@
                                                             <div class="text-gray-600 italic">
                                                                 {{ $user->email }}
                                                             </div>
+                                                            <div class="px-3 py-4 whitespace-normal text-sm text-gray-900 min-w-60">
+                                                                <a href="{{ route('user.pdf',['id' => $user->id ]) }}"
+                                                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                                                    <i class="fa-solid fa-print"></i>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
 
@@ -163,14 +169,15 @@
                                                     {{ $user->address }}
                                                 </td>
 
-                                                <td class="grid grid-rows-1 gap-2 px-2 py-3 whitespace-nowrap text-sm font-medium">
+                                                <td
+                                                    class="grid grid-rows-1 gap-2 px-2 py-3 whitespace-nowrap text-sm font-medium">
                                                     <a class="inline-flex items-center justify-center px-4 py-2 bg-sky-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-sky-600 focus:bg-sky-600 active:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                                                    
-                                                    href="{{ route('members.edit', $user->id) }}">
+                                                        href="{{ route('members.edit', $user->id) }}">
                                                         {{ __('Edit') }}
                                                     </a>
                                                     @livewire('members.delete-user-modal-confirm', ['user_id' => $user->id])
                                                 </td>
+                                                
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -248,5 +255,6 @@
         slider.addEventListener('mouseup', stopDragging, false);
         slider.addEventListener('mouseleave', stopDragging, false);
     </script>
+    <script src="https://kit.fontawesome.com/bf1e73e2b4.js" crossorigin="anonymous"></script>
 
 </x-app-layout>
