@@ -21,22 +21,28 @@ class PrivilegesSeeder extends Seeder
 
         if ($count > 0) {
 
-            $lider_privileges = [1, 2, 3, 4, 6, 10, 11, 12, 14, 15];
             $miembro_privileges = [1, 2, 6, 10, 14];
+            $lider_privileges = [1, 2, 3, 4, 6, 10, 11, 12, 14, 15];
+            $docente_privileges = [1, 2, 10, 11, 12, 14, 15, 16, 17];
 
             //Privileges for Admin
             for ($i = 1; $i <= $count; $i++) {
                 $this->roles_has_permissions[$i] = [1, $i];
             }
-
-            //Privileges for lider de grupo
-            foreach ($lider_privileges as $lider_privilege) {
-                array_push($this->roles_has_permissions, [2, $lider_privilege]);
-            }
-
+            
             //Privileges for Miembro
             foreach ($miembro_privileges as $miembro_privilege) {
-                array_push($this->roles_has_permissions, [3, $miembro_privilege]);
+                array_push($this->roles_has_permissions, [2, $miembro_privilege]);
+            }
+            
+            //Privileges for Lider de grupo
+            foreach ($lider_privileges as $lider_privilege) {
+                array_push($this->roles_has_permissions, [3, $lider_privilege]);
+            }
+
+            //Privileges for Docente
+            foreach ($docente_privileges as $docente_privilege) {
+                array_push($this->roles_has_permissions, [4, $docente_privilege]);
             }
 
             foreach ($this->roles_has_permissions as $new_rol_privilege) {

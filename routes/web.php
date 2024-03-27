@@ -5,6 +5,9 @@ use App\Http\Controllers\eventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SystemSettingsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserRolesController;
+use App\Http\Controllers\PrivilegesController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +22,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 if (!config('jetstream.auth_session', false)) {
-
     Route::view('/', ('auth.login'));
-
 } else {
     Route::redirect('/', '/dashboard');
 }
@@ -35,6 +36,10 @@ Route::middleware([
     Route::get('/dashboard', HomeController::class)->name('dashboard');
 
     Route::resource('members', UserController::class)->name('index', 'members');
+
+    Route::resource('roles', UserRolesController::class);
+
+    Route::resource('privileges', PrivilegesController::class);
 
     Route::get('/system-settings', [SystemSettingsController::class, 'show'])->name('system-settings.show');
 
