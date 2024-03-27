@@ -178,7 +178,7 @@
                                         </span>
                                     </div>
                                 </th>
-                                <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                <th class="whitespace-nowrap px-4 py-4 font-medium text-gray-900">
                                     {{ $nTransaction->name }}
                                     {{ $nTransaction->last_name }}
                                 </th>
@@ -187,18 +187,14 @@
                                         class="inline-block rounded bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700">
                                         <i class="fa-solid fa-pen-nib"></i>
                                     </a>
-                                    <a href="http://127.0.0.1:8000/finanza/Eliminar/{{ $nTransaction->id }}"
-                                        class="inline-block rounded bg-indigo-600 px-4 py-2 font-medium hover:bg-indigo-700">
-                                        <i class="fa-solid fa-eraser"></i>
-                                    </a>
                                 </th>
                             </tr>
                         @endforeach
                         <tr class="bg-blue-500">
-                            <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white">Total</th>
+                            <th class="whitespace-nowrap px-4 py-2 font-weight-bold text-lg font-medium text-white">Total</th>
                             @foreach ($transaccionTotal as $tTotales)
-                                <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white">
-                                    {{ $tTotales->total_monto }} Bs.</th>
+                                <th class="whitespace-nowrap text-lg px-4 py-2 font-weight-bold font-bold text-white py-2 px-4"><i>
+                                    {{ $tTotales->total_monto }} Bs.</i></th>
                             @endforeach
                             <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white"></th>
                             <th class="whitespace-nowrap px-4 py-2 font-weight-bold font-medium text-white"></th>

@@ -34,7 +34,7 @@
                                 <div class="grid grid-flow-row sm:grid-flow-col gap-3">
                                     <div class="sm:col-span-4 justify-center">
                                         <label class="block text-gray-700 text-sm font-bold mb-2" for="nya">
-                                            Monto</label>
+                                            Monto (Bs.)</label>
                                         <input
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                             id="nya" inputmode="numeric" pattern="^([0-9]{1,10})(.[0-9]{1,2})?$"

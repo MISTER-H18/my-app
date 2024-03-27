@@ -61,7 +61,7 @@
                         <tr>
                             <td class="service">{{ $nEvents->event }}</td>
                             <td class="desc">{{ $nEvents->description }}</td>
-                            <td class="desc">{{ $nEvent->encargado_name}} {{ $nEvent->Snombre}}</td>
+                            <td class="desc">{{ $nEvents->encargado_name}} {{ $nEvents->nombre}}</td>
                             <td class="qty">{{ $nEvents->start_date }} - {{ $nEvents->end_date }}</td>
                         </tr>
                     @endforeach

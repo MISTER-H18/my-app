@@ -15,7 +15,22 @@
     <body>
 
         <div class="min-h-full">
-
+            <div class="overflow-x-auto">
+                <div class="container mx-auto ">
+                    @if (session('success'))
+                        <div class="bg-green-400 flex justify-center items-center">
+                            <p class="text-2xl font-medium text-gray-900 font-style-italic text-white">
+                                {{ session('success') }}
+                            </p>
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div class="bg-red-400 flex justify-center items-center">
+                            <p class="text-2xl font-medium text-gray-900 font-style-italic text-white ">
+                                {{ session('error') }}
+                            </p>
+                        </div>
+                    @endif
             <!-- Menú -->
 
 
@@ -39,14 +54,15 @@
                             <div class="mb-4">
                                 <div class="grid grid-flow-row sm:grid-flow-col gap-3">
                                     <div class="sm:col-span-4 justify-center">
-                                        <label class="block text-gray-700 text-sm font-bold mb-2" for="nya"> Nombre Curso </label>
+                                        <label class="block text-gray-700 text-sm font-bold mb-2" for="nya"> Nombre
+                                            Curso </label>
                                         <input
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                             id="nya" type="text" placeholder="Ejm Oratoria" inputmode="text"
                                             name="NomCurso" minlength="5" maxlength="20" required>
                                     </div>
                                     <div class="sm:col-span-4 justify-center">
-                                        <label class="block text-gray-700 text-sm font-bold mb-2"> Docente </label> 
+                                        <label class="block text-gray-700 text-sm font-bold mb-2"> Docente </label>
                                         <select
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                             id="NomDocente" placeholder="Encargado Curso" name="id_docente" required>

@@ -6,6 +6,7 @@ use App\Models\Event;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 use function Laravel\Prompts\select;
 
@@ -41,6 +42,10 @@ class eventController extends Controller
     //--------------------------------------------------------------------------------------//
     public function update(Request $request)
     {
+        $fechaActual = Carbon::now();
+        if ($request->start_date < $fechaActual || $request->end_date < $fechaActual  ) {
+            return redirect()->route('event.EventCrud')->with('error', 'Seleccione Fechas Correctas, estas fechas expiraron');
+        }
         try {
             $sql = DB::update("UPDATE events SET event=?, start_date=?, end_date=?, description=? WHERE id=? ", [
                 $request->event,
@@ -62,6 +67,10 @@ class eventController extends Controller
     //--------------------------------------------------------------------------------------//
     public function store(Request $request)
     {
+        $fechaActual = Carbon::now();
+        if ($request->start_date < $fechaActual || $request->end_date < $fechaActual  ) {
+            return redirect()->route('event.EventCrud')->with('error', 'Seleccione Fechas Correctas, estas fechas expiraron');
+        }
 
         try {
             $sql = DB::insert('INSERT INTO events (event, start_date,end_date,description,encargado_id) values(?,?,?,?,?)', [$request->name_event, $request->start_date, $request->end_date, $request->description,$request->id_docente]);
@@ -101,14 +110,14 @@ class eventController extends Controller
      //--------------------------------------------------------------------------------------//
     public function pdfEvent()
     {
-        $events = DB::select("SELECT events.estado,events.id, event, date(start_date) as start_date, date(end_date) as end_date, description, users.name AS encargado_name, users.last_name AS Snombre FROM events INNER JOIN users ON users.id = events.encargado_id WHERE estado = 1;");
+        $events = DB::select("SELECT events.estado,events.id, event, date(start_date) as start_date, date(end_date) as end_date, description, users.name AS encargado_name, users.last_name AS nombre FROM events INNER JOIN users ON users.id = events.encargado_id WHERE estado = 1;");
         $pdf = Pdf::loadView('event.pdf',compact('events'));
         return $pdf->stream(); 
     }
      //--------------------------------------------------------------------------------------//
     public function statistics()
     {
-        $dataProfesiones = DB::select("SELECT rol_name AS profesion FROM user_roles WHERE rol_name <> 'Admin';");
+        $dataProfesiones = DB::select("SELECT rol_name AS profesion FROM user_roles WHERE rol_name <> 'Administrador';");
         $cuentaProfesiones = DB::select("SELECT user_roles.rol_name, user_rol_id, COUNT(*) AS total
         FROM users
         INNER JOIN user_roles ON users.user_rol_id = user_roles.id

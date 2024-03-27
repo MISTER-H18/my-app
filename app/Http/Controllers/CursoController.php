@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class CursoController extends Controller
 {
@@ -47,6 +48,10 @@ class CursoController extends Controller
     //---------------------------------------------------------------------------------------//
     public function update(Request $request)
     {
+        $fechaActual = Carbon::now();
+        if ($request->InCurso < $fechaActual || $request->FinCurso < $fechaActual  ) {
+            return redirect()->route('curso.cursoCrud')->with('error', 'Seleccione Fechas Correctas, estas fechas expiraron');
+        }
         $destino = 'img/'; // ruta donde se guardaran las imagenes
         try {
 
@@ -182,6 +187,17 @@ class CursoController extends Controller
     //Metodo para guardar los cursos en la base de datos
     public function store(Request $request)
     {
+        $comparar = DB::select("SELECt teacher_id from courses WHERE courses.estado ='1'AND MONTH(courses.start_date) = MONTH(CURRENT_DATE()) AND YEAR(courses.start_date) = YEAR(CURRENT_DATE())");
+        $fechaActual = Carbon::now();
+        if ($request->InCurso < $fechaActual || $request->FinCurso < $fechaActual  ) {
+            return redirect()->route('curso.cursoCrud')->with('error', 'Seleccione Fechas Correctas, estas fechas ya pasaron');
+        }
+        foreach ($comparar as $compa) {
+            
+            if ($request->id_docente == $compa->teacher_id ) {
+                return redirect()->route('curso.cursoCrud')->with('error', 'El profesor ya esta registrado en un curso este mes');
+            }
+        }
         $destino = 'img/'; // ruta donde se guardaran las imagenes
 
         try {
@@ -231,8 +247,8 @@ class CursoController extends Controller
     public function updateEstadoActividad(Request $request)
     {
         try {
-            $sql = DB::update("UPDATE tasks SET estado=? WHERE id=? ", [
-                $request->estado,
+            $sql = DB::update("UPDATE tasks SET estado= ? WHERE id= ? ", [
+                $request->tipo,
                 $request->id,
             ]);
         } catch (\Throwable $th) {
@@ -240,7 +256,7 @@ class CursoController extends Controller
             $sql = 0;
         }
         if ($sql == true) {
-            return redirect()->route('curso.cursoCrud')->with('success', '¡Evento modificado exitosamente!');
+            return redirect()->route('curso.cursoCrud')->with('success', '¡Actividad modificada exitosamente!');
         } else {
             return redirect()->route('curso.cursoCrud')->with('error', 'Falló. Intenta nuevamente.');
         }
@@ -257,7 +273,7 @@ class CursoController extends Controller
             $sql = 0;
         }
         if ($sql == true) {
-            return redirect()->route('curso.cursoCrud')->with('success', '¡Evento modificado exitosamente!');
+            return redirect()->route('curso.cursoCrud')->with('success', '¡Curso modificado exitosamente!');
         } else {
             return redirect()->route('curso.cursoCrud')->with('error', 'Falló. Intenta nuevamente.');
         }

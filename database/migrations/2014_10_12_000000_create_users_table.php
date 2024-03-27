@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('password');
             $table->timestamps();
             $table->rememberToken();
+            
             $table->foreignId('current_team_id')->nullable();
             $table->unsignedBigInteger('marital_status_id')->index('marital_status_id');
             $table->unsignedBigInteger('user_rol_id')->index('user_rol_id');

@@ -9,12 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class finanzaController extends Controller
 {
+    //______________________________________________________________________________________________________//
     public function pdf()
     {
         $transaccionTotal = DB::select("SELECT
         SUM(CASE tipo
           WHEN 1 THEN monto
-          ELSE -monto
+          ELSE - monto
         END) AS total_monto
       FROM transaction
       WHERE MONTH(fecha) = MONTH(CURDATE());");
@@ -39,6 +40,7 @@ class finanzaController extends Controller
         $pdf = Pdf::loadView('finanzas.pdf', compact('transactionMes'), compact('transaccionTotal'));
         return $pdf->stream();
     }
+    
     public function update(Request $request)
     {
         try {
@@ -60,13 +62,11 @@ class finanzaController extends Controller
             return back()->with('error', 'Falló de la transacción. Intenta nuevamente.');
         }
     }
+    //______________________________________________________________________________________________________//
     public function index()
     {
-        $transaccionTotal = DB::select("SELECT SUM(CASE tipo
-        WHEN 1 THEN monto
-        ELSE 0
-    END) AS total_monto
-    FROM transaction;");
+        $transaccionTotal = DB::select("SELECT SUM(CASE WHEN tipo = 0 THEN -monto ELSE monto END) AS total_monto
+        FROM transaction;");
         $graficaIngreso = DB::select("SELECT MONTH(fecha) AS mes, SUM(monto) AS total_monto
         FROM transaction
         WHERE tipo = 0

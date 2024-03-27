@@ -15,20 +15,26 @@ class DatabaseSeeder extends Seeder
     {
             
         $this->truncateTables([
-            'marital_statuses',
+            'permissions',
             'user_roles',
+            'privileges',
+
+            'marital_statuses',
             'users',
-            'teams',
-            'team_user',
+            // 'teams',
+            // 'team_user',
             'events',
         ]);
 
         $this->call([
-            MaritalStatusSeeder::class,
+            PermissionSeeder::class,
             UserRolesSeeder::class,
+            PrivilegesSeeder::class,
+            
+            MaritalStatusSeeder::class,
             UserSeeder::class,
-            TeamSeeder::class,
-            MembershipSeeder::class,
+            // TeamSeeder::class,
+            // MembershipSeeder::class,
             EventSeeder::class,
         ]);
         

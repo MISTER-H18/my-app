@@ -105,24 +105,27 @@
                                             @endif
                                         </select>
                                     </th>
+                                    <div class="py-2">
                                     <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                         <button
                                             class="inline-block rounded bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700"
                                             type="submit"><i class="fa-regular fa-floppy-disk"></i></button>
 
                                 </form>
-                                <a href="http://127.0.0.1:8000/curso/Editar/{{ $nCurso->id }}"
-                                    class="inline-block rounded bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700">
-                                    <i class="fa-solid fa-pen-nib"></i>
-                                </a>
-                                <a href="http://127.0.0.1:8000/curso/Eliminar/{{ $nCurso->id }}"
-                                    class="inline-block rounded bg-indigo-600 px-4 py-2 font-medium hover:bg-indigo-700">
-                                    <i class="fa-solid fa-eraser"></i>
-                                </a>
-                                <a href="http://127.0.0.1:8000/curso/actividades/crud/{{ $nCurso->id }}"
-                                    class="inline-block text-white rounded bg-indigo-600 px-4 py-2 font-medium hover:bg-indigo-700">
-                                    +
-                                </a>
+                                    
+                                    <a href="http://127.0.0.1:8000/curso/Editar/{{ $nCurso->id }}"
+                                        class="inline-block rounded bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700">
+                                        <i class="fa-solid fa-pen-nib"></i>
+                                    </a>
+                                    <a href="http://127.0.0.1:8000/curso/Eliminar/{{ $nCurso->id }}"
+                                        class="inline-block rounded bg-indigo-600 px-4 py-2 font-medium hover:bg-indigo-700">
+                                        <i class="fa-solid fa-eraser"></i>
+                                    </a>
+                                    <a href="http://127.0.0.1:8000/curso/actividades/crud/{{ $nCurso->id }}"
+                                        class="inline-block text-white rounded bg-indigo-600 px-4 py-2 font-medium hover:bg-indigo-700">
+                                        +
+                                    </a>
+                                </div>
                                 </th>
                                 
                             </tr>

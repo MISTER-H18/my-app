@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->integer('id', true);
-            $table->integer('course_id')->index('course_id');
+            $table->id();
+            $table->foreignId('course_id')->references('id')->on('courses')->constrained()->restrictOnUpdate()->cascadeOnDelete();
             $table->string('task', 45)->nullable();
             $table->text('description')->nullable();
             $table->string( 'ruta' , 100 );
-            $table->boolean('estado')->nullable();
+            $table->boolean('estado')->default(0);
 
         });
     }

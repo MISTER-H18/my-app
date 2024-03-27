@@ -130,4 +130,4 @@
         </div>
         <script src="https://kit.fontawesome.com/bf1e73e2b4.js" crossorigin="anonymous"></script>
     </div>
-@endsection
+@endsection 

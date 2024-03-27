@@ -20,6 +20,7 @@ class UserRolesSeeder extends Seeder
             ['Administrador', 'Administra y gestiona todos los aspectos del sistema.'],
             ['Lider de Grupo', 'Lidera un grupo especifico de la iglesia.'],
             ['Miembro', 'Usuario básico del sitema con privilegios limitados.'],
+            ['Docente', 'Encargados de los cursos.'],
         ];
 
         foreach ($roles as $new_rol){
