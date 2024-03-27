@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('events', function (Blueprint $table) {
+            $table->integer('id', true);
+            $table->string('event');
+            $table->datetime('start_date');
+            $table->datetime('end_date');
+            $table->timestamps();
+            $table->string('description');
+            $table->integer('encargado_id')->index('encargado_id');
+            $table->boolean('estado')->nullable();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('events');
+    }
+};
